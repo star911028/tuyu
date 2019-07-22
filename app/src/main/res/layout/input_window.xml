@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_size_64"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_corner4_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="@dimen/widget_size_16">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/widget_size_44"
+            android:layout_weight="1"
+            android:background="@drawable/shape_corner4_blue_border"
+            android:gravity="left|center"
+            android:hint="和主播说点什么..."
+            android:maxLines="4"
+            android:paddingLeft="16dp"
+            android:paddingRight="@dimen/widget_size_45"
+            android:textColor="@color/black"
+            android:textColorHint="#DDDDDD"
+            android:textCursorDrawable="@drawable/shape_et_cursor_color"
+            android:textSize="16sp"></EditText>
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingTop="15dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="15dp"
+            android:text="发送"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="14sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/send_ll"
+        android:layout_width="@dimen/widget_size_50"
+        android:layout_height="@dimen/widget_size_50"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/widget_size_23"
+        android:layout_marginBottom="@dimen/widget_size_8"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/send_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/send_gray" />
+    </LinearLayout>
+</RelativeLayout>

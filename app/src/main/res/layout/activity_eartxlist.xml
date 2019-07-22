@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_lv"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_48"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/back_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/widget_size_20"
+                android:padding="@dimen/widget_size_5"
+                android:src="@mipmap/icon_back_black" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/widget_size_25"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="支出记录"
+                android:textColor="#ff000000"
+                android:textSize="@dimen/font_size_18" />
+
+            <TextView
+                android:layout_width="@dimen/widget_size_28"
+                android:layout_height="@dimen/widget_size_22"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_20"
+                android:gravity="center"
+                android:textColor="#ff6b6b8d"
+                android:textSize="@dimen/font_size_14"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foregroundGravity="center_horizontal"
+                android:paddingLeft="@dimen/widget_size_15"
+                android:paddingRight="@dimen/widget_size_15" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+        <include
+            android:visibility="gone"
+            layout="@layout/layout_emptyview">
+        </include>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_ll"
+    android:layout_width="@dimen/widget_size_133"
+    android:layout_height="@dimen/widget_size_39"
+    android:gravity="center"
+    android:layout_marginBottom="@dimen/widget_size_5"
+    android:background="@drawable/gift_nums_itemsec_bg"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/nums_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1314"
+        android:layout_marginLeft="@dimen/widget_size_10"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/text_tv"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="right"
+        android:text="天长地久"
+        android:layout_marginRight="@dimen/widget_size_10"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</LinearLayout>

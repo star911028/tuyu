@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--未选中的图片-->
+    <item android:drawable="@mipmap/point_nor" android:state_selected="false" />
+    <!--已选中的图片-->
+    <item android:drawable="@mipmap/point_sec" android:state_selected="true" />
+</selector>

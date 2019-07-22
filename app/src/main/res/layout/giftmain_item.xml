@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_ll"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="20dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/sec_bg_ll"
+        android:layout_width="@dimen/widget_size_72"
+        android:layout_height="@dimen/widget_size_72"
+        android:background="@drawable/gift_bg"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_iv"
+            android:layout_width="@dimen/widget_size_70"
+            android:layout_height="@dimen/widget_size_70"
+            android:src="@drawable/img" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="@dimen/widget_size_3"
+        android:gravity="center"
+        android:text="火箭"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_12" />
+
+    <TextView
+        android:id="@+id/price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9999"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_10" />
+
+</LinearLayout>

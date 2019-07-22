@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_ll"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_iv"
+            android:layout_width="@dimen/widget_size_30"
+            android:layout_height="@dimen/widget_size_30"
+            android:src="@mipmap/rabblt_icon"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/widget_size_12"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="@dimen/widget_size_25"
+            android:background="@drawable/gift_pic_bg"
+            android:gravity="center"
+            android:text="5"
+            android:paddingRight="@dimen/widget_size_5"
+            android:paddingLeft="@dimen/widget_size_5"
+            android:textColor="#33334A"
+            android:textSize="@dimen/font_size_9" />
+
+
+        <TextView
+            android:id="@+id/type2_tv"
+            android:layout_width="wrap_content"
+            android:visibility="visible"
+            android:layout_height="@dimen/widget_size_12"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="@dimen/widget_size_25"
+            android:paddingRight="@dimen/widget_size_5"
+            android:paddingLeft="@dimen/widget_size_5"
+            android:background="@drawable/gift_pic_bg"
+            android:gravity="center"
+            android:text="房主"
+            android:textColor="#33334A"
+            android:textSize="@dimen/font_size_9" />
+
+    </FrameLayout>
+
+
+</LinearLayout>

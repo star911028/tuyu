@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false">
+
+
+    <ImageView
+        android:id="@+id/head_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/widget_size_80"
+        android:src="@mipmap/rabbit_head" />
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="@dimen/widget_size_308"
+        android:layout_height="@dimen/widget_size_296"
+        android:layout_below="@+id/head_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/exit_center_bg"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/tips_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/widget_size_30"
+                android:gravity="center"
+                android:text="提示"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_18"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/widget_size_30"
+            android:paddingLeft="@dimen/widget_size_20"
+            android:paddingRight="@dimen/widget_size_20"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="尊敬的用户，您上传的头像须遵守相关法律法规和社区规则，并经过审核才能生效，审核结果会通过兔语官方号通知。请严格遵守相关规定，以免违规。"
+                android:textColor="#6b6b8d"
+                android:gravity="left"
+                android:lineSpacingExtra="@dimen/widget_size_10"
+                android:layout_gravity="center"
+                android:textSize="@dimen/font_size_15" />
+
+            <TextView
+                android:id="@+id/exit_tv"
+                android:padding="@dimen/widget_size_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/widget_size_20"
+                android:gravity="right"
+                android:text="确定"
+                android:textColor="#5f85ff"
+                android:textSize="@dimen/font_size_18"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false">
+
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="@dimen/widget_size_308"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/exit_center_bg"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/tips_bg"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/widget_size_15"
+                android:layout_marginTop="@dimen/widget_size_15"
+                android:src="@mipmap/back_close_gray"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/widget_size_30"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="玩法说明"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_18"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/close_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/widget_size_15"
+                android:layout_marginRight="@dimen/widget_size_15"
+                android:src="@mipmap/back_close_gray" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/widget_size_20"
+            android:layout_height="@dimen/widget_size_250">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/rule_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_margin="@dimen/widget_size_20"
+                    android:gravity="left"
+                    android:lineSpacingExtra="@dimen/widget_size_10"
+
+                    android:textColor="#ff6b6b8d"
+                    android:textSize="@dimen/font_size_15" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/edit_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_45"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/room_tips_btn_bg"
+            android:layout_marginRight="@dimen/widget_size_22"
+            android:layout_marginTop="@dimen/widget_size_20"
+            android:layout_marginBottom="@dimen/widget_size_30"
+            android:layout_marginLeft="@dimen/widget_size_22"
+            android:text="编辑"
+            android:textColor="#ffffffff"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

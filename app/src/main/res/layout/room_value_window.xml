@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false">
+
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_size_400"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/room_peoin_bigbg"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_74"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/widget_size_20"
+                android:src="@mipmap/back_close_gray"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/num_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/widget_size_15"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="心动值统计"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_18"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/close_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_20"
+                android:src="@mipmap/back_close_gray" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/widget_size_15"
+            android:layout_marginTop="@dimen/widget_size_20"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/widget_size_10"
+                    android:text="心动值统计"
+                    android:textColor="#ff33334a"
+                    android:textSize="@dimen/font_size_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="统计规则：通过麦上用户所收到的礼物值计算"
+                    android:textColor="#ffa9a9c6"
+                    android:textSize="@dimen/font_size_12" />
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/main_cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_15"
+                android:background="@drawable/radio_selecter"
+                android:button="@null"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/clear_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/widget_size_20"
+            android:layout_marginRight="@dimen/widget_size_20"
+            android:background="@drawable/blue_btn_bg"
+            android:gravity="center"
+            android:paddingTop="@dimen/widget_size_13"
+            android:paddingBottom="@dimen/widget_size_13"
+            android:text="统计清零"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_16"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_size_7"
+            android:layout_marginBottom="@dimen/widget_size_47"
+            android:gravity="center"
+            android:text="将房间内所有人员的心动值清零"
+            android:textColor="#ffa9a9c6"
+            android:textSize="@dimen/font_size_12" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

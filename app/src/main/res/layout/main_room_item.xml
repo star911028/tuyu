@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/widget_size_20"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="@dimen/widget_size_50"
+        android:layout_height="@dimen/widget_size_50">
+
+       <!-- android:src="@mipmap/empty_place"-->
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_iv"
+            android:layout_width="@dimen/widget_size_50"
+            android:layout_height="@dimen/widget_size_50"
+            android:src="@mipmap/room_bossset"
+            app:civ_border_color="@color/bank_bg3"
+            app:civ_border_width="0dp" />
+
+
+
+        <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/gift_iv"
+            android:layout_width="@dimen/widget_size_50"
+            android:layout_height="@dimen/widget_size_50"
+            />
+        <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/gift_iv2"
+            android:layout_width="@dimen/widget_size_50"
+            android:layout_height="@dimen/widget_size_50"
+            />
+        <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/gift_iv3"
+            android:layout_width="@dimen/widget_size_50"
+            android:layout_height="@dimen/widget_size_50"
+            />
+
+        <TextView
+            android:id="@+id/isrec_tv"
+            android:layout_width="@dimen/widget_size_45"
+            android:layout_height="@dimen/widget_size_15"
+            android:background="@drawable/room_cardiac_bg"
+            android:text="主持"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_10" />
+
+
+        <ImageView
+            android:id="@+id/closemic_iv"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:src="@mipmap/microphone_mute"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/needlinemic_iv"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:src="@mipmap/microphone_wait"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widget_size_6"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_12" />
+
+    <LinearLayout
+        android:id="@+id/cardiac_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/widget_size_15"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/widget_size_5"
+        android:background="@drawable/room_cardiac_bg"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/widget_size_7"
+            android:layout_marginRight="@dimen/widget_size_5"
+            android:src="@mipmap/cardiac_value" />
+
+        <TextView
+            android:id="@+id/nums_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/widget_size_8"
+            android:layout_marginBottom="@dimen/widget_size_1"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_10" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

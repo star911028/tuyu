@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_ll"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/widget_size_20"
+    android:gravity="center"
+    android:layout_marginRight="@dimen/widget_size_15"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/img_iv"
+        android:layout_width="@dimen/widget_size_55"
+        android:layout_height="@dimen/widget_size_55"
+        android:src="@mipmap/rabblt_icon"
+        android:layout_marginBottom="@dimen/widget_size_5"
+        app:civ_border_color="@color/bank_bg3"
+        app:civ_border_width="0dp" />
+
+    <TextView
+        android:id="@+id/nums_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20"
+        android:textSize="@dimen/font_size_15"
+        android:textColor="#6B6B8D" />
+
+
+</LinearLayout>

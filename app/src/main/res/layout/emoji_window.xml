@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false">
+
+   <LinearLayout
+       android:id="@+id/pop_layout"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:background="@drawable/room_gift_bg"
+       android:clickable="true"
+       android:orientation="vertical"
+     >
+
+
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/recycler_gift"
+          android:layout_marginBottom="@dimen/widget_size_40"
+          android:layout_width="match_parent"
+          android:layout_marginTop="@dimen/widget_size_15"
+          android:layout_height="@dimen/widget_size_240"
+          android:visibility="visible"></android.support.v7.widget.RecyclerView>
+
+   </LinearLayout>
+
+</RelativeLayout>

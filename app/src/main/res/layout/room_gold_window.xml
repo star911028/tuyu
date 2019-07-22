@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false">
+
+
+    <RelativeLayout
+        android:id="@+id/has_gold_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/howe_god_color" />
+
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_size_76"
+            android:layout_marginBottom="@dimen/widget_size_7"
+            android:gravity="center"
+            android:text="是的撒大的"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_24"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:id="@+id/time_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_tv"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/widget_size_6"
+            android:layout_marginBottom="@dimen/widget_size_26"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="剩余显示时间 "
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_14" />
+
+
+            <cn.iwgang.countdownview.CountdownView
+                android:id="@+id/countdown_v"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/widget_size_10"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                app:isHideTimeBackground="false"
+                app:isShowDay="false"
+                app:isShowHour="false"
+                app:isShowMillisecond="false"
+                app:isShowMinute="true"
+                app:isShowSecond="true"
+                app:isTimeTextBold="true"
+                app:suffixGravity="center"
+                app:suffixHour="时"
+                app:suffixMillisecond="毫秒"
+                app:suffixMinute="分钟"
+                app:suffixSecond="秒"
+                app:suffixTextColor="@color/white"
+                app:suffixTextSize="@dimen/font_size_14"
+                app:timeBgBorderRadius="@dimen/widget_size_10"
+                app:timeBgColor="#FFAC03"
+                app:timeBgRadius="@dimen/widget_size_5"
+                app:timeBgSize="1dp"
+                app:timeTextColor="@color/white"
+                app:timeTextSize="@dimen/font_size_14" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="@dimen/widget_size_224"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/time_ll"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/widget_size_25"
+            android:layout_marginRight="@dimen/widget_size_25"
+            android:gravity="left|center"
+            android:lineSpacingExtra="@dimen/widget_size_10"
+            android:text="@string/room_gold_text"
+            android:textColor="#F59EFF"
+            android:textSize="@dimen/font_size_11" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/no_gold_rv"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/gray_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/howe_god_gray" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_size_126"
+            android:layout_marginBottom="@dimen/widget_size_7"
+            android:gravity="center"
+            android:text="虚位以待"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_24"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="@dimen/widget_size_214"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/widget_size_25"
+            android:layout_marginTop="@dimen/widget_size_200"
+            android:layout_marginRight="@dimen/widget_size_25"
+            android:gravity="bottom"
+            android:lineSpacingExtra="@dimen/widget_size_10"
+            android:text="@string/room_gold_text"
+            android:textColor="#A8A8FF"
+            android:textSize="@dimen/font_size_12" />
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/gold_fl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widget_size_150"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/gold_headbg" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imggold_iv"
+            android:layout_width="@dimen/widget_size_73"
+            android:layout_height="@dimen/widget_size_73"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/widget_size_10"
+            android:src="@mipmap/boos_1"
+            android:layout_marginLeft="@dimen/widget_size_1"
+            app:civ_border_color="@color/transparent20"
+            app:civ_border_width="0dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/boss_label" />
+
+    </FrameLayout>
+
+
+</RelativeLayout>

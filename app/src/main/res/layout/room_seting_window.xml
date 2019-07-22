@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false">
+
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_size_288"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/room_peoin_bigbg"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/widget_size_20"
+            android:layout_marginBottom="@dimen/widget_size_20"
+            android:gravity="center"
+            android:text="房间设置"
+            android:textColor="#ff000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/widget_size_25"
+            android:layout_marginBottom="@dimen/widget_size_20"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/baseinfo_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_19"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/widget_size_50"
+                    android:layout_marginBottom="@dimen/widget_size_5"
+                    android:layout_height="@dimen/widget_size_50"
+                    android:src="@mipmap/btn_report1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="基本信息"
+                    android:textColor="#333148"
+                    android:textSize="@dimen/font_size_12" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/roombg_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_19"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/widget_size_50"
+                    android:layout_marginBottom="@dimen/widget_size_5"
+                    android:layout_height="@dimen/widget_size_50"
+                    android:src="@mipmap/btn_report2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="房间背景"
+                    android:textColor="#333148"
+                    android:textSize="@dimen/font_size_12" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/roombgm_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_19"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/widget_size_50"
+                    android:layout_marginBottom="@dimen/widget_size_5"
+                    android:layout_height="@dimen/widget_size_50"
+                    android:src="@mipmap/btn_report3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="背景音乐"
+                    android:textColor="#333148"
+                    android:textSize="@dimen/font_size_12" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/onlinenum_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_19"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/widget_size_50"
+                    android:layout_marginBottom="@dimen/widget_size_5"
+                    android:layout_height="@dimen/widget_size_50"
+                    android:src="@mipmap/btn_report4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="在线观众"
+                    android:textColor="#333148"
+                    android:textSize="@dimen/font_size_12" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/admin_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_19"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/widget_size_50"
+                    android:layout_marginBottom="@dimen/widget_size_5"
+                    android:layout_height="@dimen/widget_size_50"
+                    android:src="@mipmap/btn_report5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="管理员"
+                    android:textColor="#333148"
+                    android:textSize="@dimen/font_size_12" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/closepin_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_15"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/widget_size_50"
+                    android:layout_height="@dimen/widget_size_50"
+                    android:layout_marginBottom="@dimen/widget_size_5"
+                    android:src="@mipmap/btn_report6" />
+
+                <TextView
+                    android:id="@+id/showCharm_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="关闭公屏"
+                    android:textColor="#333148"
+                    android:textSize="@dimen/font_size_12" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/widget_size_25"
+            android:layout_marginBottom="@dimen/widget_size_40"
+            android:orientation="horizontal">
+
+
+
+
+            <LinearLayout
+                android:id="@+id/value_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_19"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/widget_size_50"
+                    android:layout_marginBottom="@dimen/widget_size_5"
+                    android:layout_height="@dimen/widget_size_50"
+                    android:src="@mipmap/btn_report7" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="心动值统计"
+                    android:textColor="#333148"
+                    android:textSize="@dimen/font_size_12" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

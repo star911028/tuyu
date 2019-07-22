@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_ll"
+    android:layout_width="@dimen/widget_size_146"
+    android:layout_height="@dimen/widget_size_145"
+    android:layout_marginLeft="@dimen/widget_size_10"
+    android:background="@drawable/main_hot1"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/img_iv"
+        android:layout_width="@dimen/widget_size_40"
+        android:layout_height="@dimen/widget_size_40"
+        android:layout_gravity="top"
+        android:layout_marginLeft="@dimen/widget_size_10"
+        android:layout_marginTop="@dimen/widget_size_5"
+        android:layout_marginBottom="@dimen/widget_size_10"
+        android:src="@mipmap/rabblt_icon"
+        app:civ_border_color="@color/transparent20"
+        app:civ_border_width="0dp" />
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_size_40"
+        android:layout_marginLeft="@dimen/widget_size_10"
+        android:layout_marginRight="@dimen/widget_size_15"
+        android:maxLines="2"
+        android:text="棒棒棒棒棒棒棒棒棒棒枯"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_15" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/widget_size_5"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="@dimen/widget_size_64"
+            android:layout_height="@dimen/widget_size_19"
+            android:layout_marginRight="@dimen/widget_size_5"
+            android:gravity="center"
+            android:background="@drawable/main_hot_text"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/numpeo_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_12"
+                android:text="64人在玩" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/widget_size_52"
+            android:layout_height="@dimen/widget_size_19"
+            android:layout_marginRight="@dimen/widget_size_5"
+            android:gravity="center"
+            android:background="@drawable/main_hot_text"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/type_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size_10"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="处对象" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:scaleType="fitXY"
+        android:visibility="gone" />
+
+
+</LinearLayout>

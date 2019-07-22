@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/log"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:text="日志"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/advanced"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:text="@string/advanced"
+        android:textColor="@color/white" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/user_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/boom"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="20dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/boom"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/widget_size_10"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ToggleButton
+                android:id="@+id/btn_mic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:checked="true"
+                android:textOff="@null"
+                android:textOn="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="麦克风"
+                android:textSize="@dimen/font_size_10" />
+        </LinearLayout>
+
+
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/widget_size_10"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ToggleButton
+                android:id="@+id/start_push"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:checked="true"
+                android:textOff="@null"
+                android:textOn="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开始发布直播"
+                android:textSize="@dimen/font_size_10" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/exit_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/exit_phone"
+            android:src="@drawable/rabblt_icon" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/widget_size_10"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ToggleButton
+                android:id="@+id/stop_push"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:checked="true"
+                android:textOff="@null"
+                android:textOn="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="停止发布直播"
+                android:textSize="@dimen/font_size_10" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/widget_size_10"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ToggleButton
+                android:id="@+id/btn_speaker"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:checked="true"
+                android:textOff="@null"
+                android:textOn="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="扬声器"
+                android:textSize="@dimen/font_size_10" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/boom_advanced"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/toolbar"
+        android:background="#8a8a8a"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zg_btn_text_media_player" />
+
+        <Button
+            android:id="@+id/play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/zg_btn_text_play" />
+
+
+    </LinearLayout>
+</RelativeLayout>
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_ll"
+    android:layout_width="@dimen/widget_size_250"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginBottom="@dimen/widget_size_10"
+    android:background="@drawable/room_news_itembg"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="@dimen/widget_size_10">
+
+    <ImageView
+        android:id="@+id/level_iv"
+        android:layout_width="@dimen/widget_size_41"
+        android:layout_height="@dimen/widget_size_17"
+        android:layout_marginRight="@dimen/widget_size_5"
+        android:src="@mipmap/label_levle_0" />
+
+
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="今日魅力榜"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false">
+
+
+    <ImageView
+        android:id="@+id/head_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/widget_size_120"
+        android:src="@mipmap/rabbit_head" />
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_marginTop="-10dp"
+        android:layout_width="@dimen/widget_size_308"
+        android:layout_height="@dimen/widget_size_175"
+        android:layout_below="@+id/head_iv"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/exit_center_bg"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/tips_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/widget_size_12"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="退出直播间"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_18" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:layout_marginBottom="@dimen/widget_size_30"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/exit_tv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="退出"
+                android:textColor="#333349"
+                android:textSize="@dimen/font_size_18" />
+
+
+            <TextView
+                android:id="@+id/backsmall_tv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="最小化"
+                android:textStyle="bold"
+                android:textColor="#5f85ff"
+                android:textSize="@dimen/font_size_18" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

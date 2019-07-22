@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_lv"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F8F9FC"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_48"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/back_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/widget_size_20"
+                android:padding="@dimen/widget_size_5"
+                android:src="@mipmap/icon_back_black" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/widget_size_25"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="基本信息"
+                android:textColor="#ff000000"
+                android:textSize="@dimen/font_size_18" />
+
+            <TextView
+                android:id="@+id/save_tv"
+                android:layout_width="@dimen/widget_size_28"
+                android:layout_height="@dimen/widget_size_22"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_20"
+                android:gravity="center"
+                android:text="保存"
+                android:textColor="#5F85FF"
+                android:textSize="@dimen/font_size_14"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F2F2F8" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/widget_size_15"
+            android:paddingRight="@dimen/widget_size_15">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingTop="@dimen/widget_size_15"
+                android:paddingBottom="@dimen/widget_size_15">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="房间名称"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_17" />
+
+                <EditText
+                    android:id="@+id/room_name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/widget_size_5"
+                    android:background="@null"
+                    android:ellipsize="end"
+                    android:hint="请输入房间名称"
+                    android:inputType="text"
+                    android:textCursorDrawable="@drawable/shape_et_cursor_color"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:textColor="#6b6b8a"
+                    android:textSize="@dimen/font_size_16" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F2F2F8" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/widget_size_15"
+                android:paddingBottom="@dimen/widget_size_15">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/widget_size_10"
+                    android:text="房间类型"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_17" />
+
+
+                <com.fengyuxing.tuyu.view.CustomGridView
+                    android:id="@+id/custom_gv1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="@dimen/widget_size_20"
+                    android:numColumns="5" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F2F2F8" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/widget_size_15"
+                android:paddingBottom="@dimen/widget_size_15">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="欢迎语"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_17" />
+
+                <EditText
+                    android:id="@+id/content_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/widget_size_5"
+                    android:background="@null"
+                    android:textCursorDrawable="@drawable/shape_et_cursor_color"
+                    android:ellipsize="end"
+                    android:hint="请输入房间欢迎语"
+                    android:maxLength="20"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="#6b6b8a"
+                    android:textSize="@dimen/font_size_16" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F2F2F8" />
+
+            <LinearLayout
+                android:id="@+id/pwd_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/widget_size_20"
+                android:paddingBottom="@dimen/widget_size_20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="房间密码"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_17" />
+
+                <TextView
+                    android:id="@+id/pass_tv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textColor="#ffd3d3e6"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_back_white" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#F8F9FC" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

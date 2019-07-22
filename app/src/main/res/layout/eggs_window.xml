@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false">
+
+
+    <WebView
+        android:id="@+id/main_wb"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/widget_size_20"
+        android:layout_marginRight="@dimen/widget_size_20"
+        android:layout_height="520dp"
+        android:background="@drawable/eggs_bg"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"></WebView>
+
+
+</RelativeLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	根标签为animation-list，其中oneshot代表着是否只展示一遍，设置为false会不停的循环播放动画
+	根标签下，通过item标签对动画中的每一个图片进行声明
+	android:duration 表示展示所用的该图片的时间长度
+ -->
+<animation-list
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true"
+    >
+    <item android:drawable="@drawable/speak_girl_1"    android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_2" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_3" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_4" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_5" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_6" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_7" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_8" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_9" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_10" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_11" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_12" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_13" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_14" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_15" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_16" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_17" android:duration="50"></item>
+    <item android:drawable="@drawable/speak_girl_18" android:duration="50"></item>
+</animation-list>

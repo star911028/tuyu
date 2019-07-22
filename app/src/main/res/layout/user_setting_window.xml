@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false"
+    android:gravity="bottom">
+
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/widget_size_15"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/exit_center_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/take_black_tv"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="0.5dp"
+                android:gravity="center"
+                android:text="拉黑"
+                android:textColor="#6783f7"
+                android:textSize="@dimen/font_size_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_1"
+                android:background="#f2f2f8" />
+
+            <TextView
+                android:id="@+id/sendport_tv"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="0.5dp"
+                android:gravity="center"
+                android:text="举报"
+                android:textColor="#6783f7"
+                android:textSize="@dimen/font_size_16"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/cancel_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_49"
+            android:layout_marginTop="@dimen/widget_size_15"
+            android:background="@drawable/pic_bg"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#a9a9c6"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_30" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

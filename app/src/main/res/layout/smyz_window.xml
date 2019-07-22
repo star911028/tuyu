@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false">
+
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="@dimen/widget_size_300"
+        android:layout_height="@dimen/widget_size_240"
+        android:layout_gravity="center"
+        android:background="@drawable/exit_center_bg"
+        android:clickable="true"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_size_72"
+            android:gravity="center"
+            android:text="实名验证已提交"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_size_10"
+            android:layout_marginBottom="@dimen/widget_size_30"
+            android:gravity="center"
+            android:text="@string/smyz_send"
+            android:textColor="#ff6b6b8d"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/ok_bt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_45"
+            android:layout_marginLeft="@dimen/widget_size_20"
+            android:layout_marginRight="@dimen/widget_size_20"
+            android:layout_marginBottom="@dimen/size_level20"
+            android:background="@drawable/btn_sure"
+            android:gravity="center"
+            android:text="好的"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_18"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/head_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/widget_size_110"
+        android:src="@mipmap/img_real_name" />
+
+
+</FrameLayout>

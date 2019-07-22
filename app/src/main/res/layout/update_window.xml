@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ipopwindowlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d000000"
+    android:clickable="false">
+
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="@dimen/widget_size_300"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/exit_center_bg"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/update_illustrator"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/version_code_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="发现新版本 V1.1.2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_24"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/widget_size_30"
+                android:layout_marginTop="@dimen/dp_size_18"
+                android:text="本次更新内容"
+                android:textColor="#ff000000"
+                android:textSize="16sp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/content_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/widget_size_30"
+                        android:layout_marginTop="@dimen/widget_size_15"
+                        android:layout_marginRight="@dimen/widget_size_30"
+                        android:text="【语音聊天】在这里可以遇到很多有趣的声音，在心仪的房间畅快嗨聊 【守护主播】电台守护卡、关注卡高亮，喜欢主播就点点关注吧！ 【性能优化】修复已知问题，优化整体性能。"
+                        android:textColor="#ff6b6b8d"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+            </ScrollView>
+
+            <Button
+                android:id="@+id/sure_bt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_50"
+                android:layout_marginLeft="@dimen/widget_size_20"
+                android:layout_marginTop="@dimen/widget_size_20"
+                android:layout_marginRight="@dimen/widget_size_20"
+                android:layout_marginBottom="@dimen/widget_size_20"
+                android:background="@drawable/login_bg"
+                android:text="立即升级安装"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/font_size_16"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_lv"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_48"
+            android:layout_marginBottom="@dimen/widget_size_16"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/back_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/widget_size_20"
+                android:padding="@dimen/widget_size_5"
+                android:src="@mipmap/icon_back_black" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/widget_size_25"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="实名验证"
+                android:textColor="#ff000000"
+                android:textSize="@dimen/font_size_18" />
+
+            <TextView
+                android:layout_width="@dimen/widget_size_28"
+                android:layout_height="@dimen/widget_size_22"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/widget_size_20"
+                android:gravity="center"
+                android:text="跳过"
+                android:textColor="#ff6b6b8d"
+                android:textSize="@dimen/font_size_14"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/widget_size_15"
+            android:paddingRight="@dimen/widget_size_15">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="拍摄并上传您的身份证照片"
+                android:textColor="#ff33334a"
+                android:textSize="@dimen/font_size_16" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/widget_size_40"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/widget_size_15">
+
+                <LinearLayout
+                    android:layout_width="@dimen/widget_size_168"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_iv_1"
+                        android:layout_width="@dimen/widget_size_168"
+                        android:layout_height="@dimen/widget_size_106"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/img_unload_positive" />
+
+                    <TextView
+                        android:id="@+id/send_pic1_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/sfz_update_btn"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/widget_size_9"
+                        android:paddingBottom="@dimen/widget_size_9"
+                        android:text="上传正面"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_15" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/widget_size_10"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/widget_size_168"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_iv_2"
+                        android:layout_width="@dimen/widget_size_168"
+                        android:layout_height="@dimen/widget_size_106"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/img_unload_reverse" />
+
+                    <TextView
+                        android:id="@+id/send_pic2_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/sfz_update_btn"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/widget_size_9"
+                        android:paddingBottom="@dimen/widget_size_9"
+                        android:text="上传反面"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_15" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/widget_size_15"
+                android:text="身份证照片要求"
+                android:textColor="#ff33334a"
+                android:textSize="@dimen/font_size_16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/img_id_card" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/widget_size_4"
+                android:layout_marginBottom="@dimen/widget_size_30">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="标准"
+                    android:textColor="#ff6b6b8d"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="边框缺失"
+                    android:textColor="#ff6b6b8d"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="照片模糊"
+                    android:textColor="#ff6b6b8d"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="闪光强烈"
+                    android:textColor="#ff6b6b8d"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:text="@string/smyz_rule"
+                android:textColor="#ffa9a9c6"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/send_bt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_45"
+                android:layout_marginBottom="@dimen/widget_size_15"
+                android:background="@drawable/btn_sure_nor"
+                android:gravity="center"
+                android:text="确定提交"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_18"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

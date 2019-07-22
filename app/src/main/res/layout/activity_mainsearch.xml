@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_ll"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/top_ll"
+        android:layout_marginTop="@dimen/widget_size_5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_size_40"
+        android:layout_marginLeft="@dimen/widget_size_15"
+        android:orientation="horizontal">
+
+
+        <com.fengyuxing.tuyu.util.ClearableEditText
+            android:id="@+id/main_et"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/widget_size_20"
+            android:layout_weight="1"
+            android:paddingRight="@dimen/widget_size_5"
+            android:background="@drawable/search_bg"
+            android:drawablePadding="@dimen/widget_size_2"
+            android:drawableLeft="@mipmap/icon_search"
+            android:hint="搜索房间,用户,兔语号"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxEms="11"
+            android:paddingLeft="@dimen/widget_size_15"
+            android:textColor="#ff000000"
+            android:textColorHint="#ffa9a9c6"
+            android:textSize="@dimen/font_size_14" />
+
+
+        <TextView
+            android:id="@+id/canel_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:layout_marginRight="@dimen/widget_size_15"
+            android:textColor="#ff6783f7"
+            android:textSize="@dimen/font_size_14" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/widget_size_10"
+        android:orientation="vertical">
+
+
+        <HorizontalScrollView
+            android:id="@+id/follow_sv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scrollbars="none"
+            android:visibility="visible">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_50"
+                android:layout_gravity="center"
+                app:tabBackground="@android:color/transparent"
+                app:tabIndicatorColor="@android:color/black"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="5dp"
+                app:tabPaddingStart="20dp"
+                app:tabRippleColor="@color/transparent"
+                app:tabSelectedTextColor="@color/black"
+                app:tabTextAppearance="@style/TabLayoutStyle"
+                app:tabTextColor="@color/black"
+                app:tabUnboundedRipple="false" />
+        </HorizontalScrollView>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/follow_sv"
+            android:paddingTop="1dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </LinearLayout>
+
+</LinearLayout>

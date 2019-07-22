@@ -1,0 +1,71 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">兔语</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="network_request_failure" translatable="false">网络请求失败</string>
+    <string name="permission_write_storage_rationale" translatable="false">拍照时需要存储权限</string>
+    <string name="permission_title_rationale" translatable="false">权限需求</string>
+    <string name="permission_read_storage_rationale" translatable="false">选择图片时需要读取权限</string>
+    <string name="label_cancel" translatable="false">取消</string>
+    <string name="label_ok" translatable="false">确定</string>
+    <string name="smyz_rule" translatable="false">1.确保身份证边框完整、字体清晰、亮度均匀\n 2.身份认证必须要和实名认证信息保持一致。\n 3.身份认证信息仅用于提现功能使用；认证信息兔语会严格保密。</string>
+    <string name="smyz_send" translatable="false">审核结果会在1-3天内告知，请前往\n我的-设置-账号安全查看</string>
+    <string name="login_token" translatable="false">当前登录信息失效,请重新登录</string>
+    <string name="myapp_name" translatable="false">兔语</string>
+
+    <string name="cancel">取消</string>
+    <string name="title">请选择时间</string>
+    <string name="confirm">确定</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+    <string name="select_date">选择日期</string>
+    <string name="current_date">当前日期</string>
+    <string name="select_time">选择时间</string>
+    <string name="current_time">当前时间</string>
+    <string name="bank_tv1" translatable="false">魅力榜</string>
+    <string name="bank_tv2">贡献榜</string>
+    <string name="bank_tv3">房间榜</string>
+    <string name="room_user">这里是红浪漫娱乐直播间，欢迎小哥哥的到来. 点击老板位可以和当前1-7麦互动小游戏哦～ \n【价格明细】\n 1钻棒棒糖爆音\n 6钻一分钟小游戏(主持房费各3钻）\n 21钻三分钟小游戏(主持房费各6钻）\n 主持一分钟小游戏全麦3钻 \n(主持房费各6钻)</string>
+    <string name="room_gold_text">房间累计送礼超过66元 \n送礼最高的用户可以获得该称号\n 持续送礼可以延长房间神豪位显示时间</string>
+
+    <string name="ate">&#064;Ta</string>
+    <string name="ate2"><![CDATA[@TA]]></string>
+
+
+    <string name="reply1">Reply1</string>
+    <string name="reply2">Reply2</string>
+    <string name="reply3">Reply3</string>
+    <string name="submit">Submit</string>
+    <string name="send">Send</string>
+    <string name="input_hint">Please Input&#8230;</string>
+    <string name="zg_app_title">AudioLive(%1$s)</string>
+    <string name="zg_text_self_user_name">(self)%1$s</string>
+    <string name="zg_btn_text_audio_break_rate">audio break rate : %1$s&#047;min</string>
+    <string name="zg_btn_text_delay">delay: %1$dms</string>
+    <string name="zg_btn_text_packet_loss_rate">packet loss rate : %1$d%&#37;</string>
+    <string name="zg_btn_room_name">Room name: %1$s</string>
+
+    <string name="zg_text_app_flavor_china">China</string>
+    <string name="zg_text_app_flavor_intl">International</string>
+    <string name="zg_text_app_flavor_customize">Custom</string>
+
+    <string name="zg_text_app_restart_publish_failure">Retry the push more than 10 times, please check the network.</string>
+    <string name="zg_text_sdk_version">SDK Version: </string>
+    <string name="zg_text_ve_version">VE Version: </string>
+    <string name="zg_text_app_latency_low">Low latency mode (cannot be used for RTMP flow)</string>
+    <string name="zg_checkbox_audio_traffic_control">Audio Traffic Control</string>
+    <string name="zg_text_app_latency_normal">Ordinary delay mode</string>
+    <string name="set_latency_mode">Set delay mode :</string>
+    <string name="share_log">分享日志</string>
+    <string name="advanced">高级</string>
+    <string name="back">返回</string>
+    <string name="share">分享</string>
+    <string name="zg_btn_text_play">播放</string>
+    <string name="zg_btn_text_media_player" translatable="false">媒体播放器：</string>
+    <string name="zg_btn_text_stop">停止</string>
+    <string name="zg_toast_text_play_path_error">播放媒体音乐错误, 路径没有mp3文件</string>
+    <string name="zg_text_demo_version">Demo版本: </string>
+    <string name="demo_version">版本:&#160;</string>
+</resources>

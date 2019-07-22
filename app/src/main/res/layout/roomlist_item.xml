@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/main_card_bg"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/widget_size_20"
+        android:orientation="horizontal">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_iv"
+            android:layout_width="@dimen/widget_size_60"
+            android:layout_height="@dimen/widget_size_60"
+            android:layout_gravity="center"
+            android:src="@mipmap/rabblt_icon"
+            app:civ_border_color="@color/transparent20"
+            app:civ_border_width="0dp" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/widget_size_10"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/widget_size_8"
+                android:layout_marginBottom="@dimen/widget_size_5"
+                android:ellipsize="end"
+                android:maxLength="15"
+                android:singleLine="true"
+                android:text="哈哈"
+                android:textColor="#ff33334a"
+                android:textSize="16sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/widget_size_5"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:id="@+id/sex_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/widget_size_15"
+                    android:layout_marginRight="@dimen/widget_size_5"
+                    android:background="@drawable/room_sex"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/sex_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/widget_size_10"
+                        android:layout_marginRight="@dimen/widget_size_10"
+                        android:drawableLeft="@mipmap/man"
+                        android:drawablePadding="@dimen/widget_size_2"
+                        android:gravity="center"
+                        android:text="21"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/widget_size_15"
+                    android:layout_marginRight="@dimen/widget_size_5"
+                    android:background="@drawable/room_sex"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/level_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/widget_size_10"
+                        android:layout_marginRight="@dimen/widget_size_10"
+                        android:drawablePadding="@dimen/widget_size_2"
+                        android:gravity="center"
+                        android:text="21"
+
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_10" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mai_type_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/widget_size_15"
+                    android:layout_marginRight="@dimen/widget_size_5"
+                    android:background="@drawable/room_mai_type"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/type_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/widget_size_10"
+                        android:layout_marginRight="@dimen/widget_size_10"
+                        android:gravity="center"
+                        android:text="麦上"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_10"
+                        android:textStyle="" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/remove_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/room_gift"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/mai_up_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/widget_size_15"
+            android:background="@drawable/maiup_bg"
+            android:gravity="center"
+            android:paddingLeft="@dimen/widget_size_13"
+            android:paddingTop="@dimen/widget_size_5"
+            android:paddingRight="@dimen/widget_size_13"
+            android:paddingBottom="@dimen/widget_size_5"
+            android:text="抱TA上麦"
+            android:textColor="#ff5f85ff"
+            android:textSize="@dimen/font_size_12" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

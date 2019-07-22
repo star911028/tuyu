@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.fengyuxing.tuyu">
+
+
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- 控制呼吸灯，振动器等，用于新消息提醒 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!-- 8.0 系统需要-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- 多媒体相关 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />-->
+    <!--//极构实时语音聊天-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- SDK 权限申明, 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
+    <!-- 和下面的 uses-permission 一起加入到你的 AndroidManifest 文件中。 -->
+    <permission
+        android:name="com.fengyuxing.tuyu.permission.RECEIVE_MSG"
+        android:protectionLevel="signature" />
+    <!-- 接收 SDK 消息广播权限， 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
+    <uses-permission android:name="com.fengyuxing.tuyu.permission.RECEIVE_MSG" />
+
+
+    <!--android:theme="@style/TranslucentStatusTheme"-->
+    <!--   android:roundIcon="@mipmap/ic_launcher_round"-->
+    <application
+        android:name="com.fengyuxing.tuyu.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/appicon"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:supportsRtl="true"
+        android:theme="@style/MyAppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.StartActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="standard"
+            android:theme="@style/NoActionBarFullscreen">
+        <!--    ThemeSplash  NoActionBarFullscreen-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--  android:theme="@style/TranslucentStatusTheme"-->
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MainActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN"/>-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+            <!-- 在MAIN的同级处加入过滤器，不然会导致应用图标在桌面消失等问题 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="jp.app"
+                    android:pathPrefix="/openwith"
+                    android:scheme="tuerapp" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.LoginActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity android:name="com.fengyuxing.tuyu.activity.CropActivity" />
+        <activity android:name="com.fengyuxing.tuyu.activity.TestActivity" />
+
+        <activity android:name="com.fengyuxing.tuyu.activity.WebViewActivity" />
+
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.LoginPhoneActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.AboutActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.ShowBigPicActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+
+
+
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.AddinfoActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.SettingActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.SetsafeActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.UserInfoctivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MyWalletActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.EditInfoActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.EditTextActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.RealNameauthenActivity"
+
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"></activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.BandAlpayActivity"
+
+            android:windowSoftInputMode="stateAlwaysVisible|adjustResize"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MyCollectionActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.EditSexActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MyContactsActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MyEarningsActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+      <!--  android:excludeFromRecents="true"-->
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MainRoomActivity"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:theme="@style/MyAppTheme">
+            <intent-filter>
+                <action
+                    android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.RoomBaseinfoActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.RoomSetPWDActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MainRankActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.RuleEditActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MainSearchActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+          ></activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MainSmyzActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MyBlackerActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity android:name="com.fengyuxing.tuyu.activity.MyEarDHActivity"></activity>
+        <activity android:name="com.fengyuxing.tuyu.activity.MyEarTXActivity"></activity>
+
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.MyEarDrawListActivity"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.activity.WebViewActivity2"
+
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+
+
+        <activity
+            android:name="com.fengyuxing.tuyu.zego.ZegoPhoneActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+        <activity
+            android:name="com.fengyuxing.tuyu.zego.LogsActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+
+
+        <!-- QQ-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1109455623" />
+                <!--  //         1109455623      100424468     -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 微信-->
+        <activity
+            android:name="com.fengyuxing.tuyu.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.umeng.socialize.media.WBShareCallBackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="false"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:launchMode="singleTask"
+            android:name="com.sina.weibo.sdk.share.WbShareTransActivity">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- <receiver android:name="MyReceiver">
+
+             <intent-filter>
+                 <action android:name="cn.programmer.CUSTOM_INTENT">
+                 </action>
+             </intent-filter>
+
+         </receiver>-->
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.fengyuxing.tuyu.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+
+
+</manifest>

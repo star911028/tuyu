@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_lv"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F8F9FC"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/widget_size_200"
+            android:background="@color/mine_safe_bg"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/widget_size_20">
+
+            <ImageView
+                android:id="@+id/back_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/widget_size_5"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/widget_size_20"
+                android:src="@mipmap/back_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/widget_size_25"
+                android:layout_gravity="left"
+                android:layout_marginTop="@dimen/widget_size_56"
+                android:layout_marginBottom="@dimen/widget_size_10"
+                android:gravity="center"
+                android:text="安全等级"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_18" />
+
+            <TextView
+                android:id="@+id/main_type_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/widget_size_42"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/font_size_30"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/widget_size_20"
+            android:paddingRight="@dimen/widget_size_20">
+
+            <LinearLayout
+                android:id="@+id/phonebind_ll"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_60"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:text="手机绑定"
+                    android:textColor="#000000"
+                    android:textSize="17sp" />
+
+
+                <TextView
+                    android:id="@+id/phone_type_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/widget_size_5"
+                    android:textColor="#ffa9a9c6"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_arrow_3" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_1"
+                android:background="#f2f2f8" />
+
+            <LinearLayout
+                android:id="@+id/smrz_ll"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_60"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:text="实名认证"
+                    android:textColor="#000000"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/smtype_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/widget_size_5"
+                    android:text="未开启"
+                    android:textColor="#ffa9a9c6"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_arrow_3" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_1"
+                android:background="#f2f2f8" />
+
+            <LinearLayout
+                android:id="@+id/smyz_ll"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_60"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:text="实名验证"
+                    android:textColor="#000000"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/yztype_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/widget_size_5"
+                    android:text="未开启"
+                    android:textColor="#ffa9a9c6"
+                    android:textSize="14sp" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_arrow_3" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/widget_size_1"
+                android:visibility="gone"
+                android:background="#f2f2f8" />
+
+            <LinearLayout
+                android:id="@+id/jzsf_ll"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="@dimen/widget_size_60"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:text="家长保护"
+                    android:textColor="#000000"
+                    android:textSize="17sp" />
+
+
+                <TextView
+                    android:id="@+id/jztype_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/widget_size_5"
+                    android:text="未开启"
+                    android:textColor="#ffa9a9c6"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_arrow_3" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#F8F9FC" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
