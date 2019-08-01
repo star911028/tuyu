@@ -15,11 +15,11 @@
         android:layout_height="@dimen/widget_size_72"
         android:orientation="vertical">
 
-        <ImageView
+        <pl.droidsonroids.gif.GifImageView
             android:id="@+id/img_iv"
             android:layout_width="@dimen/widget_size_70"
             android:layout_height="@dimen/widget_size_70"
-            android:src="@drawable/img" />
+            android:src="@drawable/rabblt_icon" />
     </LinearLayout>
 
     <TextView

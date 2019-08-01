@@ -231,6 +231,15 @@ public interface RetrofitService {
 
     //验证提现验证码
     String ValidatePhoneNumberTX = "/tuyu/draw/validatePhoneNumber";
+    //查询文字合法
+    String FindWordLegal = "/tuyu/validate/findWordLegal";
+
+    //打开礼物动效
+    String ShowGift = "/tuyu/room/showGift";
+
+    //关闭礼物动效
+    String CancelShowGift = "/tuyu/room/cancelShowGift";
+
 
     int[] bgAraay = {R.mipmap.label_levle_0, R.mipmap.label_levle_1, R.mipmap.label_levle_2, R.mipmap.label_levle_3, R.mipmap.label_levle_4, R.mipmap.label_levle_5, R.mipmap.label_levle_6,
             R.mipmap.label_levle_7, R.mipmap.label_levle_8, R.mipmap.label_levle_9, R.mipmap.label_levle_10, R.mipmap.label_levle_11, R.mipmap.label_levle_12, R.mipmap.label_levle_13,

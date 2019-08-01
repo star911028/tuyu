@@ -82,6 +82,15 @@ public class MainDTO implements Serializable {
     private String versionNumber;//": "1.0.0",
     private String content;//": "第一个版本"
     private String hosterCharm;//房主心动值
+    private Boolean showGift;//是否打开礼物特效
+
+    public Boolean getShowGift() {
+        return showGift;
+    }
+
+    public void setShowGift(Boolean showGift) {
+        this.showGift = showGift;
+    }
 
     public String getHosterCharm() {
         return hosterCharm;

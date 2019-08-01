@@ -85,6 +85,7 @@ import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.fengyuxing.tuyu.activity.MainRoomActivity.ChangeRoom;
 import static com.fengyuxing.tuyu.activity.MainRoomActivity.returnActivityB;
 import static com.fengyuxing.tuyu.activity.MainRoomActivity.returnActivitySmall;
 
@@ -264,6 +265,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 }
             } else if (event.getMsg().equals("退出房间")) {
                 room_news_ll.setVisibility(View.GONE);
+                if(ChangeRoom){//切换房间
+                    UrlRoomid = MyApplication.getInstance().getChangeRoomid();
+                    toastnews = true;
+                    getFindRoomInfo();
+                }
             }
         }
 

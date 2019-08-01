@@ -14,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.fengyuxing.tuyu.R;
 import com.fengyuxing.tuyu.bean.DataList;
+import com.fengyuxing.tuyu.util.RetrofitService;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -73,7 +75,12 @@ public class RoomListRecyAdapter extends RecyclerView.Adapter<RoomListRecyAdapte
                 holder.sex_tv.setCompoundDrawables(drawable, null, null, null);
             }
         }
-
+        int levelnum = Integer.valueOf(datas.get(position).getExpRank()).intValue();//用户等级
+        Picasso.with(context)
+                .load(RetrofitService.bgAraay[levelnum])//加载过程中的图片显示
+                .placeholder(RetrofitService.bgAraay[0])//加载失败中的图片显示
+                .error(RetrofitService.bgAraay[0])//如果重试3次（下载源代码可以根据需要修改）还是无法成功加载图片，则用错误占位符图片显示。
+                .into(holder.level_iv);//用户等级
         holder.sex_tv.setText(datas.get(position).getAge());
         holder.level_tv.setText("LV." + datas.get(position).getExpRank());
         holder.itemView.setTag(position);
@@ -124,7 +131,7 @@ public class RoomListRecyAdapter extends RecyclerView.Adapter<RoomListRecyAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_iv, remove_iv;
+        ImageView img_iv, remove_iv,level_iv;
         LinearLayout main_ll, mai_type_ll,sex_ll;
         TextView type_tv, title_tv, sex_tv, level_tv, mai_up_tv;
 
@@ -140,6 +147,7 @@ public class RoomListRecyAdapter extends RecyclerView.Adapter<RoomListRecyAdapte
             mai_type_ll = itemView.findViewById(R.id.mai_type_ll);
             sex_tv = itemView.findViewById(R.id.sex_tv);
             remove_iv = itemView.findViewById(R.id.remove_iv);
+            level_iv = itemView.findViewById(R.id.level_iv);
         }
     }
 

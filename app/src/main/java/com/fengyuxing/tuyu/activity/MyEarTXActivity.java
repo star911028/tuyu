@@ -69,7 +69,7 @@ public class MyEarTXActivity extends BaseActivity implements View.OnClickListene
             bandIv.setVisibility(View.GONE);
             alinfoLl.setVisibility(View.VISIBLE);
             alcodeTv.setText(AiCode);
-            alnameTv.setText("真实姓名: " + AiNmae);
+            alnameTv.setText( AiNmae);
         } else {
             bandIv.setVisibility(View.VISIBLE);
             alinfoLl.setVisibility(View.GONE);
@@ -139,10 +139,10 @@ public class MyEarTXActivity extends BaseActivity implements View.OnClickListene
         map.put("userId", MyApplication.getInstance().getUserId());
         map.put("token", MyApplication.getInstance().getToken());
         map.put("alAccount", alcodeTv.getText().toString());
-        map.put("alRealName", alnameTv.getText().toString());
+        map.put("alRealName", AiNmae);
         map.put("cash", etDiom.getText().toString().trim());
         postRequest(RetrofitService.DrawCash, map);
-        Log.e("DrawCash", "alAccount=" + alcodeTv.getText().toString() + "  alRealName=" + alnameTv.getText().toString() + "  cash=" + etDiom.getText().toString().trim());
+        Log.e("DrawCash", "alAccount=" + alcodeTv.getText().toString() + "  alRealName=" + AiNmae + "  cash=" + etDiom.getText().toString().trim());
     }
 
     @Override
@@ -177,6 +177,8 @@ public class MyEarTXActivity extends BaseActivity implements View.OnClickListene
                 Log.e("onActivityResult", "111" + data.getStringExtra("alcode"));
                 alnameTv.setText(data.getStringExtra("alname"));
                 alcodeTv.setText(data.getStringExtra("alcode"));
+                AiNmae=data.getStringExtra("alname");
+                AiCode=data.getStringExtra("alcode");
                 bandIv.setVisibility(View.GONE);
                 alinfoLl.setVisibility(View.VISIBLE);
             }

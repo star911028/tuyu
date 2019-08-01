@@ -10,6 +10,15 @@ public class GiftData implements Serializable {
     private String count;//":1534,
     private String   fileIdentifier;
     private String  giftName;
+    private String imgPath;//
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
 
     public String getFileIdentifier() {
         return fileIdentifier;

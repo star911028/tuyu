@@ -226,8 +226,16 @@ public class AddinfoActivity extends ImageBaseActivity implements View.OnClickLi
                     return;
                 }
                 if (LoginType.equals("手机号")) {
+                    if(Imgadd.length()<2){
+                        Toast.makeText(this, "请设置您的个人头像", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     InitUserInfo();//初始化用户信息   手机号用户
                 } else {
+                    if(MyApplication.getInstance().getThirdLoginpic().length()<2||MyApplication.getInstance().getThirdLoginpic()==null){
+                        Toast.makeText(this, "请设置您的个人头像", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     InitUserInfoThird();//第三方登录初始化用户信息
                 }
                 break;

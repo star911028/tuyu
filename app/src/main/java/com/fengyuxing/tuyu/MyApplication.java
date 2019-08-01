@@ -378,6 +378,15 @@ public class MyApplication extends MultiDexApplication {
         }
         return versionName;
     }
+
+    public String getChangeRoomid() {
+        return mSPUtil.getStringValue("ChangeRoomid");
+    }
+
+    public void setChangeRoomid(String ChangeRoomid) {
+        mSPUtil.setStringValue("ChangeRoomid", ChangeRoomid);
+    }
+
     // userId
     public String getUserId() {
         return mSPUtil.getStringValue("userId");

@@ -5,22 +5,28 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,11 +62,38 @@ public class RoomEggsWindow extends PopupWindow {
         textview.setTextColor(color);
     }
 
-    public RoomEggsWindow(final Activity context, OnClickListener l,String Roomid) {
+    public RoomEggsWindow(final Activity context, OnClickListener l, String Roomid) {
         this.context = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         conentView = inflater.inflate(R.layout.eggs_window, null);
         main_wb = (WebView) conentView.findViewById(R.id.main_wb);
+
+
+        WindowManager windowManager =
+                (WindowManager) context.getApplication().getSystemService(Context.
+                        WINDOW_SERVICE);
+        final Display display = windowManager.getDefaultDisplay();
+        Point outPoint = new Point();
+        if (Build.VERSION.SDK_INT >= 19) {
+            // 可能有虚拟按键的情况
+            display.getRealSize(outPoint);
+        } else {
+            // 不可能有虚拟按键
+            display.getSize(outPoint);
+        }
+        int mRealSizeWidth;//手机屏幕真实宽度
+        int mRealSizeHeight;//手机屏幕真实高度
+        mRealSizeHeight = outPoint.y;
+        mRealSizeWidth = outPoint.x;
+
+        Log.e("WINDOW_SERVICE","mRealSizeHeight="+mRealSizeHeight+"   mRealSizeWidth="+mRealSizeWidth);
+
+        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) main_wb.getLayoutParams();
+        //获取当前控件的布局对象
+        params.height =  mRealSizeHeight/3*2+100;
+        Log.e("setLayoutParams","height="+params.height);
+        main_wb.setLayoutParams(params);//将设置好的布局参数应用到控件中
+
 
         //支持javascript
         main_wb.getSettings().setJavaScriptEnabled(true);
@@ -76,23 +109,6 @@ public class RoomEggsWindow extends PopupWindow {
 
         main_wb.addJavascriptInterface(new JSInterface(context), "android");
 
-
-//        main_wb.setWebViewClient(new WebViewClient() {
-//
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                //该方法在Build.VERSION_CODES.LOLLIPOP以前有效，从Build.VERSION_CODES.LOLLIPOP起，建议使用shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead
-//                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
-//                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
-////                if (url.toString().contains("sina.cn")){
-////                    view.loadUrl("http://ask.csdn.net/questions/178242");
-////                    return true;
-////                }
-//                Log.e("shouldOverride","url="+url);
-//
-//                return false;
-//            }
-//        });
         //如果不设置WebViewClient，请求会跳转系统浏览器
         main_wb.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -110,7 +126,7 @@ public class RoomEggsWindow extends PopupWindow {
                         context.startActivity(intent);
                         return true;
                     } else {
-                        Toast.makeText(  context, "未检测到支付宝客户端，请安装后重试。", Toast.LENGTH_SHORT);
+                        Toast.makeText(context, "未检测到支付宝客户端，请安装后重试。", Toast.LENGTH_SHORT);
                     }
                 } else {
                     //H5微信支付要用，不然说"商家参数格式有误"  注意 一定要加http
@@ -125,9 +141,8 @@ public class RoomEggsWindow extends PopupWindow {
 //        main_wb.addJavascriptInterface(new WebAppInterface(context), "android");
 
 
-
-        Log.e("loadUrl","token="+"http://ty.fengyugo.com/h5/h5/eggs.html" + "?uid=" + MyApplication.getInstance().getUserId() + "&token=" + MyApplication.getInstance().getToken()+"&roomId="+Roomid);
-        main_wb.loadUrl("http://ty.fengyugo.com/h5/h5/eggs.html" + "?uid=" + MyApplication.getInstance().getUserId() + "&token=" + MyApplication.getInstance().getToken()+"&roomId="+Roomid);
+        Log.e("loadUrl", "token=" + "http://ty.fengyugo.com/h5/h5/eggs.html" + "?uid=" + MyApplication.getInstance().getUserId() + "&token=" + MyApplication.getInstance().getToken() + "&roomId=" + Roomid);
+        main_wb.loadUrl("http://ty.fengyugo.com/h5/h5/eggs.html" + "?uid=" + MyApplication.getInstance().getUserId() + "&token=" + MyApplication.getInstance().getToken() + "&roomId=" + Roomid);
 
         int h = context.getWindowManager().getDefaultDisplay().getHeight();
         int w = context.getWindowManager().getDefaultDisplay().getWidth();
@@ -179,10 +194,14 @@ public class RoomEggsWindow extends PopupWindow {
         @SuppressLint("JavascriptInterface")
         @JavascriptInterface
         public void closewb(){
-            Log.e("JSInterface","register");
-//            dismiss();
+            Log.e("JSInterface","closewb");
             EventBus.getDefault().post(new TabCheckEvent("关闭弹窗"));
-
+        }
+        @SuppressLint("JavascriptInterface")
+        @JavascriptInterface
+        public void sendMsg(String  content){//发送砸蛋中奖消息
+            Log.e("JSInterface","sendMsg"+"  content="+content);
+            EventBus.getDefault().post(new TabCheckEvent("砸蛋消息"+content));
         }
     }
 
@@ -199,4 +218,17 @@ public class RoomEggsWindow extends PopupWindow {
 
     }
 
+
+    public static int getScreenHeight(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.heightPixels;
+    }
+
+    public void getScreenWidth(Activity act) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        act.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int screenHeight = metrics.heightPixels;
+        int screenWidth = metrics.widthPixels;
+        Log.e("RoomEggsWindow", "getScreenWidth    screenHeight=" + screenHeight + "  screenWidth=" + screenWidth);//华为畅想8E     1358            小米2  1369
+    }
 }

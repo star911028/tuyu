@@ -307,8 +307,9 @@ public class RoomLookInfoWindow extends PopupWindow {
         public void handleMessage(Message msg) {
             if (msg.what == 22) {
                 MainModel model = (MainModel) msg.obj;
-                if (model.getData().getPortraitPathArray().length > 0) {
-                    String imgurl = model.getData().getPortraitPathArray()[0];
+                if(model.getData().getPortraitPathArray()!=null){
+                    if (model.getData().getPortraitPathArray().length > 0) {
+                        String imgurl = model.getData().getPortraitPathArray()[0];
 //                    if (!imgurl.equals(imggold_iv.getTag())) {//解决图片加载不闪烁的问题,可以在加载时候，对于已经加载过的item,  采用比对tag方式判断是否需要重新计算高度
 //                        imggold_iv.setTag(null);//需要清空tag，否则报错
 //                        Glide.with(context)
@@ -319,13 +320,14 @@ public class RoomLookInfoWindow extends PopupWindow {
 //                    }
 //                    imggold_iv.setTag(10);//
 
-                    Picasso.with(context)
-                            .load(imgurl)//加载过程中的图片显示
-                            .placeholder(R.mipmap.rabblt_icon)
+                        Picasso.with(context)
+                                .load(imgurl)//加载过程中的图片显示
+                                .placeholder(R.mipmap.rabblt_icon)
 //加载失败中的图片显示
 //如果重试3次（下载源代码可以根据需要修改）还是无法成功加载图片，则用错误占位符图片显示。
-                            .error(R.mipmap.rabblt_icon)
-                            .into(imggold_iv);
+                                .error(R.mipmap.rabblt_icon)
+                                .into(imggold_iv);
+                    }
                 }
                 name_tv.setText(model.getData().getUsername());
                 tuercode_tv.setText("兔语号:" + model.getData().getTuId());
@@ -355,10 +357,16 @@ public class RoomLookInfoWindow extends PopupWindow {
                     sex_tv.setBackgroundResource(R.drawable.room_sex2);
                 }
                 int levelnum = Integer.valueOf(model.getData().getExpRank()).intValue();//用户等级
-                Glide.with(context)
-                        .load(RetrofitService.bgAraay[levelnum])
-                        .apply(new RequestOptions().placeholder(RetrofitService.bgAraay[0]).error(RetrofitService.bgAraay[0]).dontAnimate())
+//                Glide.with(context)
+//                        .load(RetrofitService.bgAraay[levelnum])
+//                        .apply(new RequestOptions().placeholder(RetrofitService.bgAraay[0]).error(RetrofitService.bgAraay[0]).dontAnimate())
+//                        .into(level_iv);
+                Picasso.with(context)
+                        .load(RetrofitService.bgAraay[levelnum])//加载过程中的图片显示
+                        .placeholder(RetrofitService.bgAraay[0])//加载失败中的图片显示
+                        .error(RetrofitService.bgAraay[0])//如果重试3次（下载源代码可以根据需要修改）还是无法成功加载图片，则用错误占位符图片显示。
                         .into(level_iv);
+
                 type_tv.setText(model.getData().getAddress());
             } else if (msg.what == 23) {
                 MainModel model = (MainModel) msg.obj;

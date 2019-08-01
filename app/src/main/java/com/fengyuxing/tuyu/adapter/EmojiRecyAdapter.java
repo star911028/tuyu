@@ -24,6 +24,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import pl.droidsonroids.gif.GifImageView;
+
 /**
  * Created by Administrator on 2018/1/5.
  */
@@ -55,7 +57,8 @@ public class EmojiRecyAdapter extends RecyclerView.Adapter<EmojiRecyAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.itemView.setTag(position);
-        Glide.with(context).load(giftAraay[position]).into(holder.img_iv);
+//        Glide.with(context).load(giftAraay[position]).into(holder.img_iv);
+        holder.img_iv.setImageResource(giftAraay[position]);
         holder.type_tv.setText(giftName[position]);
 //        loadOneTimeGif(context,giftAraay[position],holder.img_iv,gifListener);//只播放一次  giftName
     }
@@ -81,7 +84,7 @@ public class EmojiRecyAdapter extends RecyclerView.Adapter<EmojiRecyAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView img_iv;
+        GifImageView img_iv;
         LinearLayout main_ll;
         TextView type_tv;
 

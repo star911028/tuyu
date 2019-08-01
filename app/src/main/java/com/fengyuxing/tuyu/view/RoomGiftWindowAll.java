@@ -36,6 +36,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.fengyuxing.tuyu.activity.UserInfoctivity;
+import com.fengyuxing.tuyu.adapter.MyBlackerRecyAdapter;
+import com.fengyuxing.tuyu.bean.MainGiftModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.fengyuxing.tuyu.MyApplication;
@@ -56,6 +59,7 @@ import com.fengyuxing.tuyu.util.TabCheckEventList;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,12 +102,14 @@ public class RoomGiftWindowAll extends PopupWindow {
     private List<View> gridViews, gridViews2;
     private LayoutInflater layoutInflater;
     private ArrayList<Gift> catogarys;
-    private List<MikeArray> giftArray = new ArrayList<>();//
+    private List<MikeArray> giftbgArray = new ArrayList<>();//
+    private GridView gridViewpk1, gridViewpk2;
     private List<String> secgiftids = new ArrayList<>();
     private String SendType = "gift";
     private LinearLayout dot_layout;
     private ImageView[] dotViews;
-    private List<String>    sendids= new ArrayList<>();
+    private List<String> sendids = new ArrayList<>();
+
     public void setDrawableAndTextColor(int id, TextView textview) {
         Drawable drawable = context.getResources().getDrawable(id);
         textview.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null);
@@ -147,6 +153,7 @@ public class RoomGiftWindowAll extends PopupWindow {
         setadmin_tv = (TextView) conentView.findViewById(R.id.setadmin_tv);
         info_tv = (TextView) conentView.findViewById(R.id.info_tv);
         give_tv = (TextView) conentView.findViewById(R.id.give_tv);
+        FindPersonalGift(handler);//查询背包礼物
         Boolean hasnavbar = checkDeviceHasNavigationBar(context);
         secgiftids.clear();
         if (hasnavbar) {
@@ -340,22 +347,22 @@ public class RoomGiftWindowAll extends PopupWindow {
         recycler_pic.setAdapter(recyAdapter);
 
         if (all_user_gift_ll.getVisibility() == View.VISIBLE) {
-            recyAdapter.ChangeBGall(true, true);
-            if (picdata.size() > 0) {
-                String result = "";
-                for (int i = 0; i < picdata.size(); i++) {
-                    if (!picdata.get(i).getMikerId().equals(MyApplication.getInstance().getUserId())) {//去除掉自己
-                        result += picdata.get(i).getMikerId() + ",";
-                    }
-                }
-                if (result.length() > 0) {
-                    toUserIdArray = result.substring(0, result.length() - 1);
-                } else {
-                    toUserIdArray = MyApplication.getInstance().getUserId();
-                }
-
-                Log.e("onClick", "result1=" + result + "   toUserIdArray=" + toUserIdArray);
-            }
+            recyAdapter.ChangeBGall(false, true);
+//            if (picdata.size() > 0) {
+//                String result = "";
+//                for (int i = 0; i < picdata.size(); i++) {
+//                    if (!picdata.get(i).getMikerId().equals(MyApplication.getInstance().getUserId())) {//去除掉自己
+//                        result += picdata.get(i).getMikerId() + ",";
+//                    }
+//                }
+//                if (result.length() > 0) {
+//                    toUserIdArray = result.substring(0, result.length() - 1);
+//                } else {
+//                    toUserIdArray = MyApplication.getInstance().getUserId();
+//                }
+//
+//                Log.e("onClick", "result1=" + result + "   toUserIdArray=" + toUserIdArray);
+//            }
         }
         for (int i = 0; i < nums.length; i++) {
             MikeArray item1 = new MikeArray();
@@ -385,6 +392,7 @@ public class RoomGiftWindowAll extends PopupWindow {
         give_tv.setOnClickListener(new View.OnClickListener() {
             @Override//赠送
             public void onClick(View v) {
+                give_tv.setEnabled(false);//重置按钮点击
                 gift_nums_ll.setVisibility(View.GONE);
                 if (!giftid.equals("") && !giftnums.equals("")) {
 //                    if (secgiftids.size() > 0) {
@@ -401,9 +409,9 @@ public class RoomGiftWindowAll extends PopupWindow {
 //                            toUserIdArray = MyApplication.getInstance().getUserId();
 //                        }
 //                    }
-                    if(recyAdapter.getSelectedItem().size()>0){//从适配器获取选中的ID
+                    if (recyAdapter.getSelectedItem().size() > 0) {//从适配器获取选中的ID
                         String finresult = "";
-                        for(int f=0;f<recyAdapter.getSelectedItem().size();f++){
+                        for (int f = 0; f < recyAdapter.getSelectedItem().size(); f++) {
                             finresult += recyAdapter.getSelectedItem().get(f) + ",";
                         }
                         if (finresult.length() > 0) {
@@ -470,7 +478,7 @@ public class RoomGiftWindowAll extends PopupWindow {
 //                Log.e("secgiftidsgeti", "result=" + result);//选中的送礼用户
 
                 String finresult = "";
-                for(int f=0;f<recyAdapter.getSelectedItem().size();f++){
+                for (int f = 0; f < recyAdapter.getSelectedItem().size(); f++) {
                     finresult += recyAdapter.getSelectedItem().get(f) + ",";
                 }
                 Log.e("secgiftidsgeti", "finresult=" + finresult);//选中的送礼用户
@@ -500,7 +508,7 @@ public class RoomGiftWindowAll extends PopupWindow {
                     }
 
                     String finresult = "";
-                    for(int f=0;f<recyAdapter.getSelectedItem().size();f++){
+                    for (int f = 0; f < recyAdapter.getSelectedItem().size(); f++) {
                         finresult += recyAdapter.getSelectedItem().get(f) + ",";
                     }
                     Log.e("secgiftidsgeti", "全选=" + finresult);//选中的送礼用户
@@ -512,7 +520,7 @@ public class RoomGiftWindowAll extends PopupWindow {
 
 
                     String finresult = "";
-                    for(int f=0;f<recyAdapter.getSelectedItem().size();f++){
+                    for (int f = 0; f < recyAdapter.getSelectedItem().size(); f++) {
                         finresult += recyAdapter.getSelectedItem().get(f) + ",";
                     }
                     Log.e("secgiftidsgeti", "全不选=" + finresult);//选中的送礼用户
@@ -531,7 +539,7 @@ public class RoomGiftWindowAll extends PopupWindow {
         });
 
 
-
+        //-------------------------------------礼物列表礼物-------------------------------------------------
         layoutInflater = context.getLayoutInflater();
         gridViews = new ArrayList<View>();
         gridViews2 = new ArrayList<View>();
@@ -573,46 +581,57 @@ public class RoomGiftWindowAll extends PopupWindow {
         gridViews.add(gridView1);
         gridViews.add(gridView2);
 //        gridViews.add(gridView3);
+
+        //-------------------------------------背包礼物-------------------------------------------------
         Log.e("emety_pakage_ll", "size=" + pakagegiftArray.size());
-        if (pakagegiftArray.size() > 0) {
-            ///定义第一个GridView
-            GridView gridViewpk1 =
-                    (GridView) layoutInflater.inflate(R.layout.grid_fragment_home, null);
-            ///定义第二个GridView
-            GridView gridViewpk2 = (GridView)
-                    layoutInflater.inflate(R.layout.grid_fragment_home, null);
-            if (pakagegiftArray.size() <= 8) {
-                Log.e("背包礼物数量","pakagegiftArray.size()="+pakagegiftArray.size());
-                myGridViewAdapterpk1 = new GiftGridViewAdapter(context, 0, pakagegiftArray.size());//第一页数据
-                gridViewpk1.setAdapter(myGridViewAdapterpk1);
-                myGridViewAdapterpk1.setGifts((ArrayList<MikeArray>) pakagegiftArray);
-                myGridViewAdapterpk1.setOnItemClickListener(new GiftMainRecyAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int tag) {//单选
-                        Log.e("onClick", "tag=" + tag);
-                        myGridViewAdapterpk1.ChangeBG(true, tag);//重置其他选中状态
-                        giftid = pakagegiftArray.get(tag).getGiftId();//选择的礼物ID
-                    }
-                });
-                gridViews2.add(gridViewpk1);
-            } else {
-                myGridViewAdapterpk2 = new GiftGridViewAdapter(context, 1, pakagegiftArray.size() - 1 * 8);//第二页数据
-                gridViewpk2.setAdapter(myGridViewAdapterpk2);
-                myGridViewAdapterpk2.setGifts((ArrayList<MikeArray>) pakagegiftArray);
-                myGridViewAdapterpk2.setOnItemClickListener(new GiftMainRecyAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int tag) {//单选
-                        Log.e("onClick", "tag=" + tag);
-//                myGridViewAdapter3.ChangeBG(false, tag);
-                        myGridViewAdapterpk1.ChangeBG(false, tag);
-                        myGridViewAdapterpk2.ChangeBG(true, tag);//重置其他选中状态
-                        giftid = pakagegiftArray.get(tag).getGiftId();//选择的礼物ID
-                    }
-                });
-                gridViews2.add(gridViewpk1);
-                gridViews2.add(gridViewpk2);
-            }
-        }
+        ///定义第一个GridView
+        gridViewpk1 =
+                (GridView) layoutInflater.inflate(R.layout.grid_fragment_home, null);
+        ///定义第二个GridView
+        gridViewpk2 = (GridView)
+                layoutInflater.inflate(R.layout.grid_fragment_home, null);
+
+        gridViews2.add(gridViewpk1);
+        gridViews2.add(gridViewpk2);
+//        if (pakagegiftArray.size() > 0) {
+//            ///定义第一个GridView
+//            gridViewpk1 =
+//                    (GridView) layoutInflater.inflate(R.layout.grid_fragment_home, null);
+//            ///定义第二个GridView
+//            gridViewpk2 = (GridView)
+//                    layoutInflater.inflate(R.layout.grid_fragment_home, null);
+//            if (pakagegiftArray.size() <= 8) {
+//                Log.e("背包礼物数量", "pakagegiftArray.size()=" + pakagegiftArray.size());
+//                myGridViewAdapterpk1 = new GiftGridViewAdapter(context, 0, pakagegiftArray.size());//第一页数据
+//                gridViewpk1.setAdapter(myGridViewAdapterpk1);
+//                myGridViewAdapterpk1.setGifts((ArrayList<MikeArray>) pakagegiftArray);//设置数据
+//                myGridViewAdapterpk1.setOnItemClickListener(new GiftMainRecyAdapter.OnItemClickListener() {
+//                    @Override//背包第一页数据点击事件
+//                    public void onItemClick(int tag) {//单选
+//                        Log.e("onClick", "tag=" + tag);
+//                        myGridViewAdapterpk1.ChangeBG(true, tag);//重置其他选中状态
+//                        giftid = pakagegiftArray.get(tag).getGiftId();//选择的礼物ID
+//                    }
+//                });
+//                gridViews2.add(gridViewpk1);
+//            } else {
+//                myGridViewAdapterpk2 = new GiftGridViewAdapter(context, 1, pakagegiftArray.size() - 1 * 8);//第二页数据
+//                gridViewpk2.setAdapter(myGridViewAdapterpk2);
+//                myGridViewAdapterpk2.setGifts((ArrayList<MikeArray>) pakagegiftArray);
+//                myGridViewAdapterpk2.setOnItemClickListener(new GiftMainRecyAdapter.OnItemClickListener() {
+//                    @Override//背包第二页数据点击事件
+//                    public void onItemClick(int tag) {//单选
+//                        Log.e("onClick", "tag=" + tag);
+////                myGridViewAdapter3.ChangeBG(false, tag);
+//                        myGridViewAdapterpk1.ChangeBG(false, tag);
+//                        myGridViewAdapterpk2.ChangeBG(true, tag);//重置其他选中状态
+//                        giftid = pakagegiftArray.get(tag).getGiftId();//选择的礼物ID
+//                    }
+//                });
+//                gridViews2.add(gridViewpk1);
+//                gridViews2.add(gridViewpk2);
+//            }
+//        }
         ///定义viewpager的PagerAdapter
         view_pager.setAdapter(new PagerAdapter() {
             @Override
@@ -847,16 +866,18 @@ public class RoomGiftWindowAll extends PopupWindow {
                     if (model.getCode().equals("1")) {
                         FindUserinfo(handler);//查询自己用户信息
                         //todo  发送消息通知适配器刷新页面 并把数字-1
-                        if (myGridViewAdapterpk1 != null) {
-                            int needdelnums = model.getData().getAttachArray().size() * Integer.parseInt(giftnums);//   送礼的数量= 送礼人数数组的id数量 X giftnums选择的礼物数量
-                            myGridViewAdapterpk1.ChangeCount(Sendgiftid, needdelnums);//重置礼物数字  参数 礼物ID  送出的礼物数量
-                            Log.e("送背包礼物成功", "model.getData().getAttachArray().size()="+model.getData().getAttachArray().size()+"   giftnums="+giftnums+"  needdelnums="+needdelnums+" Sendgiftid="+Sendgiftid);
-                        }
+//                        if (myGridViewAdapterpk1 != null) {
+//                            int needdelnums = model.getData().getAttachArray().size() * Integer.parseInt(giftnums);//   送礼的数量= 送礼人数数组的id数量 X giftnums选择的礼物数量
+//                            myGridViewAdapterpk1.ChangeCount(Sendgiftid, needdelnums);//重置礼物数字  参数 礼物ID  送出的礼物数量
+//                            Log.e("送背包礼物成功", "model.getData().getAttachArray().size()=" + model.getData().getAttachArray().size() + "   giftnums=" + giftnums + "  needdelnums=" + needdelnums + " Sendgiftid=" + Sendgiftid);
+//                        }
 //                        {"code":1,"errorMsg":"","data":{"diamond":99996,"attachArray":["{\"fromUser\":{\"expRank\":1,\"portraitPath\":\"http://www.tuerapp.com/img/user/482275_1558147445296.png\",\"userId\":3,\"username\":\"Alexander\"},\"gift\":{\"count\":1,\"giftId\":10},\"roomId\":14,\"toUser\":{\"expRank\":0,\"portraitPath\":\"http://www.tuerapp.com/img/user/7_1559354548265.png\",\"userId\":7,\"username\":\"啊喵啊狗\"},\"type\":11}"]}}
                         EventBus.getDefault().post(new TabCheckEvent("提示" + "赠送成功"));
                         EventBus.getDefault().post(new TabCheckEventList(model.getData().getAttachArray()));
                         EventBus.getDefault().post(new TabCheckEvent("礼物" + Sendgiftid));
+                        FindPersonalGift(handler);//查询背包礼物
                     } else {
+                        give_tv.setEnabled(true);//重置按钮点击
                         EventBus.getDefault().post(new TabCheckEvent("提示" + model.getErrorMsg()));
                     }
                 }
@@ -873,6 +894,7 @@ public class RoomGiftWindowAll extends PopupWindow {
                         EventBus.getDefault().post(new TabCheckEvent("提示" + model.getErrorMsg()));
                     }
                 }
+                give_tv.setEnabled(true);//重置按钮点击
             } else if (msg.what == 23) {
                 MainModel model = (MainModel) msg.obj;
                 if (model.getCode().equals("1")) {
@@ -890,6 +912,49 @@ public class RoomGiftWindowAll extends PopupWindow {
                 if (model.getCode().equals("1")) {
                     money_tv.setText(model.getData().getDiamond());
                 } else {
+                    Toast.makeText(context, model.getErrorMsg(), Toast.LENGTH_SHORT);
+                    EventBus.getDefault().post(new TabCheckEvent("提示" + model.getErrorMsg()));
+                }
+            } else if (msg.what == 25) {
+                final MainGiftModel model = (MainGiftModel) msg.obj;
+                if (model.getCode().equals("1")) {
+                    giftbgArray.clear();
+                    if (model.getData().size() <= 8) {
+                        Log.e("背包礼物数量", "pakagegiftArray.size()=" + model.getData().size());
+                        myGridViewAdapterpk1 = new GiftGridViewAdapter(context, 0, model.getData().size());//第一页数据
+                        gridViewpk1.setAdapter(myGridViewAdapterpk1);
+                        myGridViewAdapterpk1.setGifts((ArrayList<MikeArray>) model.getData());
+                        myGridViewAdapterpk1.setOnItemClickListener(mOnItemClickListener);
+//                        gridViews2.add(gridViewpk1);
+                    } else {
+                        myGridViewAdapterpk1 = new GiftGridViewAdapter(context, 0, model.getData().size());//第一页数据
+                        gridViewpk1.setAdapter(myGridViewAdapterpk1);
+                        myGridViewAdapterpk1.setGifts((ArrayList<MikeArray>) model.getData());
+                        myGridViewAdapterpk1.setOnItemClickListener(mOnItemClickListener);
+
+                        myGridViewAdapterpk2 = new GiftGridViewAdapter(context, 1, model.getData().size() - 1 * 8);//第二页数据
+                        gridViewpk2.setAdapter(myGridViewAdapterpk2);
+                        myGridViewAdapterpk2.setGifts((ArrayList<MikeArray>) model.getData());
+                        myGridViewAdapterpk2.setOnItemClickListener(mOnItemClickListener2);
+//                        gridViews2.add(gridViewpk1);
+//                        gridViews2.add(gridViewpk2);
+                    }
+                    for (int i = 0; i < model.getData().size(); i++) {
+                        giftbgArray.add(model.getData().get(i));
+                        if (giftid != null && giftid.length() > 0) {
+                            if (model.getData().get(i).getGiftId().equals(giftid)) {
+                                if (i <= 8) {
+                                    myGridViewAdapterpk1.ChangeBG(true, i);//重置其他选中状态
+                                } else {
+                                    myGridViewAdapterpk1.ChangeBG(false, 0);
+                                    myGridViewAdapterpk2.ChangeBG(true, i);//重置其他选中状态
+                                }
+                            }
+                        }
+                    }
+                    give_tv.setEnabled(true);//重置按钮点击
+                } else {
+                    give_tv.setEnabled(true);//重置按钮点击
                     Toast.makeText(context, model.getErrorMsg(), Toast.LENGTH_SHORT);
                     EventBus.getDefault().post(new TabCheckEvent("提示" + model.getErrorMsg()));
                 }
@@ -969,6 +1034,37 @@ public class RoomGiftWindowAll extends PopupWindow {
     }
 
 
+    /**
+     * 发起网络请求 查询背包礼物
+     */
+    public static void FindPersonalGift(final Handler handler) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    FormBody formBody = new FormBody.Builder().add("userId", MyApplication.getInstance().getUserId()).add("token", MyApplication.getInstance().getToken()).build();
+                    final Request request = new Request.Builder().url(NetConstant.API_FindPersonalGift).post(formBody).build();
+                    okhttp3.Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        final String responseStr = response.body().string();
+                        Log.e("API_FindPersonalGift", "responseStr=" + responseStr);
+                        MainGiftModel mMainModel = new Gson().fromJson(responseStr,
+                                new TypeToken<MainGiftModel>() {
+                                }.getType());
+                        handler.sendMessage(handler.obtainMessage(25, mMainModel));
+                    } else {
+                        Log.i(TAG, "okHttp is request error");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+
     //获取是否存在NavigationBar
     public static boolean checkDeviceHasNavigationBar(Context context) {
         boolean hasNavigationBar = false;
@@ -1019,4 +1115,42 @@ public class RoomGiftWindowAll extends PopupWindow {
 
         return list;
     }
+
+    private GiftMainRecyAdapter.OnItemClickListener mOnItemClickListener = new GiftMainRecyAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(int position) {
+            Log.e("onClick", "tag=" + position);
+            myGridViewAdapterpk1.ChangeBG(true, position);//重置其他选中状态
+            giftid = giftbgArray.get(position).getGiftId();//选择的礼物ID
+        }
+    };
+    private GiftMainRecyAdapter.OnItemClickListener mOnItemClickListener2 = new GiftMainRecyAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(int position) {
+            myGridViewAdapterpk1.ChangeBG(false, position);
+            myGridViewAdapterpk2.ChangeBG(true, position);//重置其他选中状态
+            giftid = giftbgArray.get(position).getGiftId();//选择的礼物ID
+        }
+    };
+
+
+//        myGridViewAdapterpk1.setOnItemClickListener(new GiftMainRecyAdapter.OnItemClickListener() {
+//        @Override//背包第一页数据点击事件
+//        public void onItemClick(int tag) {//单选
+//            Log.e("onClick", "tag=" + tag);
+//            myGridViewAdapterpk1.ChangeBG(true, tag);//重置其他选中状态
+//            giftid = pakagegiftArray.get(tag).getGiftId();//选择的礼物ID
+//        }
+//    });
+//       myGridViewAdapterpk2.setOnItemClickListener(new GiftMainRecyAdapter.OnItemClickListener() {
+//        @Override//背包第二页数据点击事件
+//        public void onItemClick(int tag) {//单选
+//            Log.e("onClick", "tag=" + tag);
+////                myGridViewAdapter3.ChangeBG(false, tag);
+//            myGridViewAdapterpk1.ChangeBG(false, tag);
+//            myGridViewAdapterpk2.ChangeBG(true, tag);//重置其他选中状态
+//            giftid = pakagegiftArray.get(tag).getGiftId();//选择的礼物ID
+//        }
+//    });
+
 }

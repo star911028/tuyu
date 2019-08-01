@@ -156,16 +156,16 @@ public class MainRoomSetAdapter extends RecyclerView.Adapter<MainRoomSetAdapter.
         }
 
         if (datas.get(position).getCharm() != null) {
-            float num1 = Float.parseFloat(datas.get(position).getCharm());
-            if (num1 >= 10000) {
-                DecimalFormat decimalFormat = new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
-                String strPrice = decimalFormat.format(num1 / 10000);//返回字符串
-                holder.nums_tv.setText(strPrice + "W");//心动值 //保留两位小数
-            } else {
-                holder.nums_tv.setText(datas.get(position).getCharm());//心动值
-            }
+//            float num1 = Float.parseFloat(datas.get(position).getCharm());
+//            if (num1 >= 10000) {
+//                DecimalFormat decimalFormat = new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+//                String strPrice = decimalFormat.format(num1 / 10000);//返回字符串
+//                holder.nums_tv.setText(strPrice + "W");//心动值 //保留两位小数
+//            } else {
+//                holder.nums_tv.setText(datas.get(position).getCharm());//心动值
+//            }
+            holder.nums_tv.setText(datas.get(position).getCharm());//心动值
         }
-
         if (datas.get(position).getMikerGender() != null) {
             if (datas.get(position).getMikerGender().equals("男")) {
                 holder.cardiac_ll.setBackgroundResource(R.drawable.room_cardiac_bg);

@@ -1,9 +1,17 @@
 package com.fengyuxing.tuyu.activity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.widget.TextView;
 
 import com.fengyuxing.tuyu.R;
+
+
+import io.reactivex.Maybe;
+import io.reactivex.MaybeObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 
 public class TestActivity extends BaseActivity {
 
@@ -19,6 +27,7 @@ public class TestActivity extends BaseActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void initView(Bundle savedInstanceState) {
     }

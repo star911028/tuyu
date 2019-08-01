@@ -48,11 +48,6 @@ public class NetConstant {
     public static final String API_FollowUser= HOST + "/user/followUser?";//   接口说明：关注好友
     public static final String API_CancelFollowUser= HOST + "/user/cancelFollowUser?";//   接口说明：取消关注好友
 
-
-
-
-
-
-
+    public static final String API_FindPersonalGift= HOST + "/gift/findPersonalGift?";//查询背包礼物
 
 }

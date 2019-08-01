@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -18,6 +20,9 @@ import android.widget.TextView;
 import com.fengyuxing.tuyu.R;
 import com.fengyuxing.tuyu.adapter.RoomListRecyAdapter;
 import com.fengyuxing.tuyu.bean.DataList;
+import com.fengyuxing.tuyu.util.TabCheckEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,8 @@ import java.util.List;
 
 public class RoomSetingWindow extends PopupWindow {
     private final LinearLayout pop_layout, baseinfo_ll,roombg_ll,roombgm_ll,value_ll,onlinenum_ll,admin_ll,closepin_ll;
+    private final CheckBox gift_cb;
+    private final TextView gift_tv;
 
     private View conentView;
     private Context context;
@@ -46,7 +53,7 @@ public class RoomSetingWindow extends PopupWindow {
         textview.setTextColor(color);
     }
 
-    public RoomSetingWindow(final Activity context, OnClickListener l,String showCharm) {
+    public RoomSetingWindow(final Activity context, OnClickListener l,String showCharm,Boolean RoomShowGift) {
         this.context = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         conentView = inflater.inflate(R.layout.room_seting_window, null);
@@ -59,10 +66,32 @@ public class RoomSetingWindow extends PopupWindow {
         closepin_ll = (LinearLayout) conentView.findViewById(R.id.closepin_ll);
         value_ll = (LinearLayout) conentView.findViewById(R.id.value_ll);
         pop_layout = (LinearLayout) conentView.findViewById(R.id.pop_layout);
+        gift_tv = (TextView) conentView.findViewById(R.id.gift_tv);
+        gift_cb = (CheckBox) conentView.findViewById(R.id.gift_cb);
         if(showCharm.equals("true")){
             showCharm_tv.setText("关闭公屏");
         }else {
             showCharm_tv.setText("打开公屏");
+        }
+        gift_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override //礼物特效开关监听
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {//静音
+                    gift_tv.setText("关闭礼物特效");
+//                    EventBus.getDefault().post(new TabCheckEvent("礼物动效" + "打开"));
+                } else {
+                    gift_tv.setText("打开礼物特效");
+//                    EventBus.getDefault().post(new TabCheckEvent("礼物动效" + "关闭"));
+                }
+            }
+        });
+        if(RoomShowGift){
+            gift_tv.setText("关闭礼物特效");
+            gift_cb.setChecked(true);
+        }else {
+            gift_tv.setText("打开礼物特效");
+            gift_cb.setChecked(false);
         }
         baseinfo_ll.setTag(4);//基本信息
         baseinfo_ll.setOnClickListener(l);
@@ -85,7 +114,8 @@ public class RoomSetingWindow extends PopupWindow {
         value_ll.setTag(10);//心动值统计
         value_ll.setOnClickListener(l);
 
-
+        gift_cb.setTag(14);//礼物特效开关
+        gift_cb.setOnClickListener(l);
 
         int h = context.getWindowManager().getDefaultDisplay().getHeight();
         int w = context.getWindowManager().getDefaultDisplay().getWidth();

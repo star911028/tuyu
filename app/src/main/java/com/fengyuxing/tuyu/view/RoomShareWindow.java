@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -20,24 +22,29 @@ import android.widget.TextView;
 import com.fengyuxing.tuyu.R;
 import com.fengyuxing.tuyu.adapter.RoomListRecyAdapter;
 import com.fengyuxing.tuyu.bean.DataList;
+import com.fengyuxing.tuyu.util.TabCheckEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 
-
 //房间分享窗口
 
 public class RoomShareWindow extends PopupWindow {
     private final LinearLayout pop_layout;
-    private final LinearLayout share_home_ll,share_friend_ll,navbar_ll,share_fans_ll,share_wx_ll,share_wxciec_ll,share_qq_ll,share_qqzone_ll,share_wb_ll,share_jb_ll,share_sc_ll;
+    private final LinearLayout share_home_ll, share_friend_ll, navbar_ll, share_fans_ll, share_wx_ll, share_wxciec_ll, share_qq_ll, share_qqzone_ll, share_wb_ll, share_jb_ll, share_sc_ll;
+    private final CheckBox gift_cb;
+    private final TextView gift_tv;
     //    private ImageView  close_iv;
     private View conentView;
     private Context context;
     private LinearLayoutManager layoutManager;
     private RoomListRecyAdapter adapter;
     private List<DataList> data = new ArrayList<>();
+
     public void setDrawableAndTextColor(int id, TextView textview) {
         Drawable drawable = context.getResources().getDrawable(id);
         textview.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null);
@@ -50,29 +57,50 @@ public class RoomShareWindow extends PopupWindow {
         textview.setTextColor(color);
     }
 
-    public RoomShareWindow(final Activity context, OnClickListener l) {
+    public RoomShareWindow(final Activity context, OnClickListener l,Boolean ShowGift) {
         this.context = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         conentView = inflater.inflate(R.layout.room_share_window, null);
-        share_home_ll= (LinearLayout) conentView.findViewById(R.id.share_home_ll);
-        navbar_ll= (LinearLayout) conentView.findViewById(R.id.navbar_ll);
-        share_friend_ll= (LinearLayout) conentView.findViewById(R.id.share_friend_ll);
-        share_fans_ll= (LinearLayout) conentView.findViewById(R.id.share_fans_ll);
-        share_wx_ll= (LinearLayout) conentView.findViewById(R.id.share_wx_ll);
-        share_wxciec_ll= (LinearLayout) conentView.findViewById(R.id.share_wxciec_ll);
-        share_qq_ll= (LinearLayout) conentView.findViewById(R.id.share_qq_ll);
-        share_qqzone_ll= (LinearLayout) conentView.findViewById(R.id.share_qqzone_ll);
-        share_wb_ll= (LinearLayout) conentView.findViewById(R.id.share_wb_ll);
-        share_jb_ll= (LinearLayout) conentView.findViewById(R.id.share_jb_ll);
-        share_sc_ll= (LinearLayout) conentView.findViewById(R.id.share_sc_ll);
+        share_home_ll = (LinearLayout) conentView.findViewById(R.id.share_home_ll);
+        navbar_ll = (LinearLayout) conentView.findViewById(R.id.navbar_ll);
+        share_friend_ll = (LinearLayout) conentView.findViewById(R.id.share_friend_ll);
+        share_fans_ll = (LinearLayout) conentView.findViewById(R.id.share_fans_ll);
+        share_wx_ll = (LinearLayout) conentView.findViewById(R.id.share_wx_ll);
+        share_wxciec_ll = (LinearLayout) conentView.findViewById(R.id.share_wxciec_ll);
+        share_qq_ll = (LinearLayout) conentView.findViewById(R.id.share_qq_ll);
+        share_qqzone_ll = (LinearLayout) conentView.findViewById(R.id.share_qqzone_ll);
+        share_wb_ll = (LinearLayout) conentView.findViewById(R.id.share_wb_ll);
+        share_jb_ll = (LinearLayout) conentView.findViewById(R.id.share_jb_ll);
+        share_sc_ll = (LinearLayout) conentView.findViewById(R.id.share_sc_ll);
         pop_layout = (LinearLayout) conentView.findViewById(R.id.pop_layout);
-
+        gift_tv = (TextView) conentView.findViewById(R.id.gift_tv);
+        gift_cb = (CheckBox) conentView.findViewById(R.id.gift_cb);
+        gift_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override //礼物特效开关监听
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {//静音
+                    gift_tv.setText("关闭礼物特效");
+                    EventBus.getDefault().post(new TabCheckEvent("礼物动效" + "打开"));
+                } else {
+                    gift_tv.setText("打开礼物特效");
+                    EventBus.getDefault().post(new TabCheckEvent("礼物动效" + "关闭"));
+                }
+            }
+        });
+        if(ShowGift){
+            gift_tv.setText("关闭礼物特效");
+            gift_cb.setChecked(true);
+        }else {
+            gift_tv.setText("打开礼物特效");
+            gift_cb.setChecked(false);
+        }
         Boolean hasnavbar = checkDeviceHasNavigationBar(context);
         if (hasnavbar) {
             int hight = getNavigationBarHeight();//虚拟键的高度
             Log.e("hasnavbar", "有虚拟键" + " hight=" + hight);
-            LinearLayout.LayoutParams lp=(LinearLayout.LayoutParams)navbar_ll.getLayoutParams();
-            lp.height=hight;
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) navbar_ll.getLayoutParams();
+            lp.height = hight;
             navbar_ll.setLayoutParams(lp);
         } else {
             Log.e("hasnavbar", "没有虚拟键");
@@ -97,8 +125,6 @@ public class RoomShareWindow extends PopupWindow {
         share_jb_ll.setOnClickListener(l);
         share_sc_ll.setTag(13);
         share_sc_ll.setOnClickListener(l);
-
-
 
         int h = context.getWindowManager().getDefaultDisplay().getHeight();
         int w = context.getWindowManager().getDefaultDisplay().getWidth();
@@ -141,6 +167,7 @@ public class RoomShareWindow extends PopupWindow {
             this.dismiss();
         }
     }
+
     private int getNavigationBarHeight() {
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");

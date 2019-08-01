@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/widget_size_15"
-                    android:checked="true"
+                    android:checked="false"
                     android:background="@drawable/radio_gift_selecter"
                     android:button="@null"
                     android:gravity="center" />

@@ -23,12 +23,14 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +43,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -57,22 +61,6 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.netease.nim.uikit.api.NimUIKit;
-import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.Observer;
-import com.netease.nimlib.sdk.RequestCallback;
-import com.netease.nimlib.sdk.chatroom.ChatRoomMessageBuilder;
-import com.netease.nimlib.sdk.chatroom.ChatRoomService;
-import com.netease.nimlib.sdk.chatroom.ChatRoomServiceObserver;
-import com.netease.nimlib.sdk.chatroom.model.ChatRoomMessage;
-import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomData;
-import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
-import com.netease.nimlib.sdk.msg.MsgService;
-import com.netease.nimlib.sdk.msg.constant.MsgTypeEnum;
-import com.netease.nimlib.sdk.msg.model.LocalAntiSpamResult;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.fengyuxing.tuyu.MyApplication;
 import com.fengyuxing.tuyu.MyReceiver;
 import com.fengyuxing.tuyu.R;
@@ -89,6 +77,7 @@ import com.fengyuxing.tuyu.bean.NewsArray;
 import com.fengyuxing.tuyu.bean.StringModel;
 import com.fengyuxing.tuyu.task.BaseSyncTask;
 import com.fengyuxing.tuyu.task.TinySyncExecutor;
+import com.fengyuxing.tuyu.task2.SyncSchduler;
 import com.fengyuxing.tuyu.util.RetrofitService;
 import com.fengyuxing.tuyu.util.ShareUtils;
 import com.fengyuxing.tuyu.util.TabCheckEvent;
@@ -121,6 +110,25 @@ import com.fengyuxing.tuyu.zego.PrefUtils;
 import com.fengyuxing.tuyu.zego.RecyclerGridViewAdapter;
 import com.fengyuxing.tuyu.zego.StreamState;
 import com.fengyuxing.tuyu.zego.SystemUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.Observer;
+import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.chatroom.ChatRoomMessageBuilder;
+import com.netease.nimlib.sdk.chatroom.ChatRoomService;
+import com.netease.nimlib.sdk.chatroom.ChatRoomServiceObserver;
+import com.netease.nimlib.sdk.chatroom.model.ChatRoomMessage;
+import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomData;
+import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
+import com.netease.nimlib.sdk.msg.MsgService;
+import com.netease.nimlib.sdk.msg.MsgServiceObserve;
+import com.netease.nimlib.sdk.msg.constant.MsgTypeEnum;
+import com.netease.nimlib.sdk.msg.model.BroadcastMessage;
+import com.netease.nimlib.sdk.msg.model.LocalAntiSpamResult;
+import com.squareup.picasso.Picasso;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zego.zegoaudioroom.ZegoAudioAVEngineDelegate;
 import com.zego.zegoaudioroom.ZegoAudioDeviceEventDelegate;
 import com.zego.zegoaudioroom.ZegoAudioLiveEvent;
@@ -170,7 +178,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import static com.fengyuxing.tuyu.activity.MainActivity.HasMainActivity;
 import static com.fengyuxing.tuyu.util.RetrofitService.CancelSetReceptionistMike;
 import static com.zego.zegoaudioroom.ZegoAudioLiveEvent.Audio_Play_BeginRetry;
 import static com.zego.zegoaudioroom.ZegoAudioLiveEvent.Audio_Play_RetrySuccess;
@@ -179,9 +186,8 @@ import static com.zego.zegoaudioroom.ZegoAudioLiveEvent.Audio_Publish_BeginRetry
 import static com.zego.zegoaudioroom.ZegoAudioLiveEvent.Audio_Publish_RetrySuccess;
 import static com.zego.zegoaudioroom.ZegoAudioLiveEvent.Audio_Publish_TempDisconnected;
 
-//import com.zy.live.yunxin.CrapsAction;
 
-public class MainRoomActivity extends BaseActivity implements View.OnClickListener, SensorEventListener, EditorCallback , MyReceiver.Message{
+public class MainRoomActivity extends BaseActivity implements View.OnClickListener, SensorEventListener, EditorCallback, MyReceiver.Message {
     //主房间页面
     private static final String TAG = "MainRoomActivity";
     @BindView(R.id.img_iv)
@@ -245,6 +251,9 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
     CircleImageView imggoldIv;
     @BindView(R.id.mic_phone_cb)
     CheckBox mic_phone_cb;
+    @BindView(R.id.enb_voice_cb)
+    CheckBox enb_voice_cb;
+
     @BindView(R.id.gold_name_tv)
     TextView gold_name_tv;
     @BindView(R.id.main_bg_iv)
@@ -254,6 +263,8 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.animation_eggs_view)
     LottieAnimationView animation_eggs_view;
 
+    @BindView(R.id.animation_gift_all)
+    LottieAnimationView animation_gift_all;
 
     @BindView(R.id.talk_ll)
     LinearLayout talkLl;
@@ -317,6 +328,33 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
     LinearLayout cardiacLl;
     @BindView(R.id.main_center_ll)
     LinearLayout mainCenterLl;
+    @BindView(R.id.img_gift_all)
+    CircleImageView imgGiftAll;
+    @BindView(R.id.name_tv)
+    TextView nameTv;
+    @BindView(R.id.text_giftall_to)
+    TextView textGiftallTo;
+    @BindView(R.id.text_giftall_go)
+    TextView textGiftallGo;
+    @BindView(R.id.text_giftall_nums)
+    TextView textGiftallNums;
+    @BindView(R.id.main_gift_fl)
+    FrameLayout mainGiftFl;
+
+    @BindView(R.id.main_gift_zd_fl)
+    FrameLayout main_gift_zd_fl;
+    @BindView(R.id.img_gift_all_zd)
+    CircleImageView imgGiftAllZd;
+    @BindView(R.id.name_tv_zd)
+    TextView nameTvZd;
+    @BindView(R.id.text_giftall_to_zd)
+    TextView textGiftallToZd;
+    @BindView(R.id.gift_all_zdimg)
+    ImageView giftAllZdimg;
+    @BindView(R.id.text_giftall_nums_zd)
+    TextView textGiftallNumsZd;
+    @BindView(R.id.gift_all_url)
+    ImageView giftAllUrl;
     private ArrayList<GiftList> listgift = new ArrayList<>();
     private List<DataList> datalist = new ArrayList<>();
     private MainRoomSetAdapter recyAdapter;
@@ -418,8 +456,20 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
     private Boolean Updatanews = true;
     public static boolean returnActivityB;//是否直接返回房间  在Mainactivity判断
     public static boolean returnActivitySmall;//是否直接返回房间  在Mainactivity判断
+    public static boolean ChangeRoom;//是否切换房间  在Mainactivity判断
     private AudioManager audioManager;
     MyReceiver myReceiver;
+    private String sendnes = "";
+    private String GiftAlltype = "";
+    private String GiftAllisman = "";
+    private int GiftAllpostion = -1;
+    private Boolean ShowGift = true;
+    private Boolean isFirst = true;
+    private Boolean RoomShowGift = true;//房间动效状态
+    private Animation translateAnimation, translateAnimation2, translateAnimation3, translateAnimation4;
+    private SyncSchduler syncSchduler, syncSchduler2;
+    private Boolean isPlayAll = false;
+    private Boolean isPlayAll2 = false;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main_room;
@@ -427,12 +477,18 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-
         Log.e("MainRoomLive", "initView");
-//        test_iv.setVisibility(View.VISIBLE);
-//        test_iv.setImageResource(R.drawable.room_man_soundgif);
-//        animationDrawabletest = (AnimationDrawable) test_iv.getDrawable();
-//        animationDrawabletest.start();
+        MyApplication.getInstance().setChangeRoomid("");//切换房间的roomid
+        translateAnimation = AnimationUtils.loadAnimation(mContext, R.anim.anim_room_giftall_in);
+        translateAnimation2 = AnimationUtils.loadAnimation(mContext, R.anim.anim_room_giftall_out);
+        translateAnimation.setAnimationListener(new MyListenr1());//动画监听1
+        translateAnimation2.setAnimationListener(new MyListenr2());//动画监听2
+
+
+        translateAnimation3 = AnimationUtils.loadAnimation(mContext, R.anim.anim_room_giftall_in);
+        translateAnimation4 = AnimationUtils.loadAnimation(mContext, R.anim.anim_room_giftall_out);
+        translateAnimation3.setAnimationListener(new MyListenr3());//动画监听1
+        translateAnimation4.setAnimationListener(new MyListenr4());//动画监听2
         PlayEggs();
 
         regisgerPhoneCallingListener();
@@ -468,7 +524,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         }
         getBackgroundImgPath();//获取主页背景图
         FindGift();//查询礼物列表
-        FindPersonalGift();//查询背包礼物列表
+//        FindPersonalGift();//查询背包礼物列表
         //聊天室消息监听
         incomingChatRoomMsg = new Observer<List<ChatRoomMessage>>() {
             @Override
@@ -535,16 +591,19 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                                     newsArrays.add(newsArraydata);
                                 } else if (type.equals("11")) {//送礼消息
                                     //队列播放
-                                    final BaseSyncTask task1 = new BaseSyncTask() {
-                                        @Override
-                                        public void doTask() {
-                                            Log.e("doTask", "task1" + "   " + attachment.getMainDataBean().getGift().getFileIdentifier());
-                                            if (attachment.getMainDataBean().getGift().getFileIdentifier() != null) {
-                                                PlaygiftAnim(attachment.getMainDataBean().getGift().getFileIdentifier());
+                                    Log.e("ShowGift", "送礼消息      ShowGift=" + ShowGift);
+                                    if (ShowGift) {//打开了礼物动效
+                                        final BaseSyncTask task1 = new BaseSyncTask() {
+                                            @Override
+                                            public void doTask() {
+                                                Log.e("doTask", "task1" + "   " + attachment.getMainDataBean().getGift().getFileIdentifier());
+                                                if (attachment.getMainDataBean().getGift().getFileIdentifier() != null) {
+                                                    PlaygiftAnim(attachment.getMainDataBean().getGift().getFileIdentifier());
+                                                }
                                             }
-                                        }
-                                    };
-                                    TinySyncExecutor.getInstance().enqueue(task1);//添加队列
+                                        };
+                                        TinySyncExecutor.getInstance().enqueue(task1);//添加队列
+                                    }
                                     FindCacheRoomInfo();//刷新直播间信息
 //                                    newslist.add(attachment.getMainDataBean().getFromUser().getUsername() + " 打赏 " + attachment.getMainDataBean().getToUser().getUsername() + " " + getGiftName(attachment.getMainDataBean().getGift().getGiftId()) + " X" + attachment.getMainDataBean().getGift().getCount());//添加消息数据到列表
                                     NewsArray newsArraydata = new NewsArray();
@@ -722,15 +781,119 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         };
         NIMClient.getService(ChatRoomServiceObserver.class).observeReceiveMessage(incomingChatRoomMsg, true);
         Log.e("NIMClient", "incomingChatRoomMsg注册");
+
+        NIMClient.getService(MsgServiceObserve.class).observeBroadcastMessage(new Observer<BroadcastMessage>() {
+            @Override//云信广播监听
+            public void onEvent(BroadcastMessage broadcastMessage) {//全服通知消息监听  broadcastMessage.getContent()为json字符串
+                Log.e("observeBroadcastMessage", "onEvent=" + broadcastMessage.getContent());
+                final MainDataBean model = new Gson().fromJson(broadcastMessage.getContent(),
+                        new TypeToken<MainDataBean>() {
+                        }.getType());
+                if (model.getType().equals("42")) {//全服送礼通知
+                    syncSchduler.add(broadcastMessage.getContent());
+                    Log.e("SyncSchduler", "add");
+                    Log.e("isPlayAll", "isPlayAll=" + isPlayAll);
+                    if (!isPlayAll) {
+                        syncSchduler.next();
+                    }
+                } else if (model.getType().equals("43")) {//全服砸蛋通知
+                    syncSchduler2.add(broadcastMessage.getContent());
+                    Log.e("syncSchduler2", "add");
+                    if (!isPlayAll2) {
+                        syncSchduler2.next();
+                    }
+                    Log.e("syncSchduler2", "next");
+                }
+            }
+        }, true);//注册
+
+        syncSchduler = new SyncSchduler(new SyncSchduler.Callback() {
+            @Override
+            public void apply(Object data) { //执行动画
+                Log.e("SyncSchduler", "data.toString()=" + data.toString());
+                isPlayAll = true;
+                MainDataBean model = new Gson().fromJson(data.toString(),
+                        new TypeToken<MainDataBean>() {
+                        }.getType());
+                Log.e("SyncSchduler", "apply");
+                MyApplication.getInstance().setChangeRoomid(model.getRoomId());//切换房间的roomid
+                Picasso.with(mContext)
+                        .load(model.getFromUser().getPortraitPath())
+                        .placeholder(R.mipmap.rabblt_icon)//加载过程中的图片显示
+                        .error(R.mipmap.rabblt_icon)//加载失败中的图片显示 //如果重试3次（下载源代码可以根据需要修改）还是无法成功加载图片，则用错误占位符图片显示。
+                        .into(imgGiftAll);
+                Picasso.with(mContext)
+                        .load(model.getGift().getImgPath())
+                        .placeholder(R.mipmap.rabblt_icon)//加载过程中的图片显示
+                        .error(R.mipmap.rabblt_icon)//加载失败中的图片显示 //如果重试3次（下载源代码可以根据需要修改）还是无法成功加载图片，则用错误占位符图片显示。
+                        .into(giftAllUrl);
+                nameTv.setText(model.getFromUser().getUsername());
+                textGiftallTo.setText("送给 " + model.getToUser().getUsername());
+                textGiftallNums.setText("x " + model.getGift().getCount());
+                //动画效果
+                mainGiftFl.setVisibility(View.VISIBLE);
+                mainGiftFl.startAnimation(translateAnimation);
+                animation_gift_all.setImageAssetsFolder("gift_al_images");
+                animation_gift_all.setAnimation("gift_all_toast.json");//设置动画文件
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        animation_gift_all.playAnimation();//lottie动画
+                    }
+                }, 800); // 延时
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mainGiftFl.startAnimation(translateAnimation2);//anim动画
+                    }
+                }, 7000); // 延时
+            }
+        });
+
+
+        syncSchduler2 = new SyncSchduler(new SyncSchduler.Callback() {
+            @Override
+            public void apply(Object data) { //执行动画
+                isPlayAll2=true;
+                MainDataBean model = new Gson().fromJson(data.toString(),
+                        new TypeToken<MainDataBean>() {
+                        }.getType());
+                nameTvZd.setText(model.getFromUser().getUsername());
+                textGiftallNumsZd.setText("x" + model.getGift().getCount());
+                textGiftallToZd.setText("砸出" + model.getGift().getGiftName() + "(价值" + model.getBody() + "钻石)");
+                Picasso.with(mContext)
+                        .load(model.getFromUser().getPortraitPath())
+                        .placeholder(R.mipmap.rabblt_icon)//加载过程中的图片显示
+                        .error(R.mipmap.rabblt_icon)//加载失败中的图片显示 //如果重试3次（下载源代码可以根据需要修改）还是无法成功加载图片，则用错误占位符图片显示。
+                        .into(imgGiftAllZd);
+                Picasso.with(mContext)
+                        .load(model.getGift().getImgPath())
+                        .placeholder(R.mipmap.rabblt_icon)//加载过程中的图片显示
+                        .error(R.mipmap.rabblt_icon)//加载失败中的图片显示 //如果重试3次（下载源代码可以根据需要修改）还是无法成功加载图片，则用错误占位符图片显示。
+                        .into(giftAllZdimg);
+
+                //动画效果
+                main_gift_zd_fl.setVisibility(View.VISIBLE);
+                main_gift_zd_fl.startAnimation(translateAnimation3);
+//                animation_gift_all.setImageAssetsFolder("gift_al_images");
+//                animation_gift_all.setAnimation("gift_all_toast.json");//设置动画文件
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        animation_gift_all.playAnimation();//lottie动画
+//                    }
+//                }, 800); // 延时
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        main_gift_zd_fl.startAnimation(translateAnimation4);//anim动画
+                    }
+                }, 7000); // 延时
+            }
+        });
     }
 
-//    //添加数据
-//    public void addItem(int position, Object data) {
-//        mDatas.add(position, data);
-//        notifyItemInserted(position);//通知演示插入动画
-//        notifyItemRangeChanged(position,mDatas.size()-position);//通知数据与界面重新绑定
-//    }
-
+    //播放表情
     public void RoomPlayemoji(int emojiindex, int emojiposition) {
         if (emojiposition == 0) {
             Log.e("MainRoomSetAdapter", "emojiindex=" + emojiindex + "   emojiposition0=" + emojiposition);
@@ -946,19 +1109,21 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                                 newsArraydata.setBody(model.getFromUser().getUsername() + " 打赏 " + model.getToUser().getUsername() + " " + getGiftName(model.getGift().getGiftId()) + " X" + model.getGift().getCount());
                                 newsArraydata.setExpRank(model.getFromUser().getExpRank());
                                 newsArrays.add(newsArraydata);//设置公屏显示消息
-                                if (model.getGift().getGiftId() != null) {//播放礼物 火箭
+                                if (ShowGift) {//打开了礼物动效
+                                    if (model.getGift().getGiftId() != null) {//播放礼物 火箭
 //                                    GiftAnimWindow(model.getGift().getGiftId());
-                                    //队列播放
-                                    final BaseSyncTask task1 = new BaseSyncTask() {
-                                        @Override
-                                        public void doTask() {
-                                            Log.e("doTask", "task1");
-                                            if (model.getGift().getFileIdentifier() != null) {
-                                                PlaygiftAnim(model.getGift().getFileIdentifier());
+                                        //队列播放
+                                        final BaseSyncTask task1 = new BaseSyncTask() {
+                                            @Override
+                                            public void doTask() {
+                                                Log.e("doTask", "task1");
+                                                if (model.getGift().getFileIdentifier() != null) {
+                                                    PlaygiftAnim(model.getGift().getFileIdentifier());
+                                                }
                                             }
-                                        }
-                                    };
-                                    TinySyncExecutor.getInstance().enqueue(task1);//添加队列
+                                        };
+                                        TinySyncExecutor.getInstance().enqueue(task1);//添加队列
+                                    }
                                 }
                             }
                         } else if (type.equals("36")) {//发送表情消息
@@ -975,6 +1140,14 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                             }
 //                            recyAdapter.PlayEmoji(giftindex, mikenumber);//播放表情   index 要播放的表情的索引  postion 播放表情的位置
                             RoomPlayemoji(giftindex, mikenumber);
+                        } else if (type.equals("39")) {//发送砸蛋中奖消息
+                            if (jsondata.length() > 0) {
+                                NewsArray newsArraydata = new NewsArray();
+                                newsArraydata.setBody(model.getFromUser().getUsername() + " 真幸运! 打中了 " + model.getGift().getGiftName() + " X " + model.getGift().getCount());
+                                newsArraydata.setExpRank(model.getFromUser().getExpRank());
+                                newsArraydata.setUserid(model.getFromUser().getUserId());
+                                newsArrays.add(newsArraydata);
+                            }
                         }
                         if (roomrecyAdapter == null) {
                             roomrecyAdapter = new RoomNewsRecyAdapter(mContext, newsArrays);
@@ -1016,6 +1189,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Subscribe
     public void onEventMainThread(TabCheckEvent event) {//popwindow 弹出提示
         Log.e("onEventMainRoom", "TabCheckEvent.getMsg()= " + event.getMsg());
@@ -1088,30 +1262,57 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
 
 
                 } else if (event.getMsg().startsWith("发送消息")) {
-                    String sendnes = event.getMsg().replace("发送消息", "");
-                    LocalAntiSpamResult result = NIMClient.getService(MsgService.class).checkLocalAntiSpam(sendnes, "****");//，然后判断result.getOperator()的值，如果为1，可以通过result.getContent()获取替换后的文本。
-                    //  Android端检查结果类型：0 未命中，1 命中本地替换库，2 命中本地拦截库，3 命中服务端拦截库
-                    Log.e("LocalAntiSpamResult", "getOperator=" + result.getOperator());
-                    if (result.getOperator() == 2) {//敏感文字
-                        Toast.makeText(mContext, "发送失败，兔语提醒您文明用语", Toast.LENGTH_LONG).show();
-                    } else {
-                        MainDataBean mainDataBean = new MainDataBean();
-                        mainDataBean.setBody(sendnes);
-                        mainDataBean.setType("10");
-                        UserData data = new UserData();
-                        data.setExpRank(MyApplication.getInstance().getUserRank());
-                        data.setPortraitPath(MyApplication.getInstance().getUserImg());
-                        data.setUserId(MyApplication.getInstance().getUserId());
-                        data.setUsername(MyApplication.getInstance().getUserName());
-                        mainDataBean.setFromUser(data);
-                        //对象转字符串
-                        Gson gson = new Gson();
-                        String jsondata = gson.toJson(mainDataBean);
-                        ChatRoomSendMSG2("10", "", "", "", jsondata);
-                    }
+                     sendnes = event.getMsg().replace("发送消息", "");
+//                    LocalAntiSpamResult result = NIMClient.getService(MsgService.class).checkLocalAntiSpam(sendnes, "****");//，然后判断result.getOperator()的值，如果为1，可以通过result.getContent()获取替换后的文本。
+//                    //  Android端检查结果类型：0 未命中，1 命中本地替换库，2 命中本地拦截库，3 命中服务端拦截库
+//                    Log.e("LocalAntiSpamResult", "getOperator=" + result.getOperator());
+//                    if (result.getOperator() == 2) {//敏感文字
+//                        Toast.makeText(mContext, "发送失败，兔耳提醒您文明用语", Toast.LENGTH_LONG).show();
+//                    } else {
+//                        MainDataBean mainDataBean = new MainDataBean();
+//                        mainDataBean.setBody(sendnes);
+//                        mainDataBean.setType("10");
+//                        UserData data = new UserData();
+//                        data.setExpRank(MyApplication.getInstance().getUserRank());
+//                        data.setPortraitPath(MyApplication.getInstance().getUserImg());
+//                        data.setUserId(MyApplication.getInstance().getUserId());
+//                        data.setUsername(MyApplication.getInstance().getUserName());
+//                        mainDataBean.setFromUser(data);
+//                        //对象转字符串
+//                        Gson gson = new Gson();
+//                        String jsondata = gson.toJson(mainDataBean);
+//                        ChatRoomSendMSG2("10", "", "", "", jsondata);
+//                    }
+                    FindWordLegal(sendnes);//校验发送文字是否合法
                 } else if (event.getMsg().startsWith("冲榜")) {
+                    GiftAlltype = "2";
+                    GiftAllisman = "1";
+                    GiftAllpostion = 0;
                     FindPersonalGift();//查询背包礼物列表
-                    RoomGiftWindowAll("2", "1", giftArray, Roomid, 0, roomdata, pakagegiftArray);
+//                    RoomGiftWindowAll("2", "1", giftArray, Roomid, 0, roomdata, pakagegiftArray);
+                } else if (event.getMsg().startsWith("礼物动效")) {
+                    String gifttype = event.getMsg().replace("礼物动效", "");
+                    if (gifttype.equals("打开")) {
+                        ShowGift = true;//打开礼物动效
+                    } else if (gifttype.equals("关闭")) {
+                        ShowGift = false;//关闭礼物动效
+                    }
+                } else if (event.getMsg().startsWith("砸蛋消息")) {
+                    String newslist = event.getMsg().replace("砸蛋消息", "");
+                    Gson gson = new Gson();
+                    final List<String> eggsData = gson.fromJson(newslist, new TypeToken<ArrayList<String>>() {
+                    }.getType());
+                    runOnUiThread(new Runnable() {//线程切换
+                        @Override
+                        public void run() {
+                            //循环发送消息
+                            for (int i = 0; i < eggsData.size(); i++) {
+                                Log.e("ChatRoomSendMSG2 39", "string=" + eggsData.get(i));
+                                ChatRoomSendMSG2("39", "", "", "", eggsData.get(i));//发送砸蛋消息
+                            }
+                        }
+                    });
+
                 }
             }
         }
@@ -1152,7 +1353,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                         Log.e("MainRoomSetAdapter", "MainRoomSetAdapter");
                         EventBus.getDefault().post(new TabCheckEvent("提示" + "该麦位已锁"));
                     } else {
-                        if (my_mike_type.getText().equals("我要上麦")) {//在麦上就不做操作
+                        if (my_mike_type.getText().equals("上麦")) {//在麦上就不做操作
                             getLineForMike(mikeArray.get(position).getMikeId());//按麦位排麦
                         } else {
                             Toast.makeText(mContext, "你已经在麦上了", Toast.LENGTH_SHORT).show();
@@ -1192,6 +1393,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
     public void onResume() {
         super.onResume();
         returnActivityB = true;
+        ChangeRoom = false;
         MyApplication.getInstance().setIsRoomto("");//设置私聊入口
         Log.e("MainRoomLive", "onResume");
         Log.e("音频模块", "onResume恢复");
@@ -1240,6 +1442,10 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void PlaygiftAnim(String fileIdentifier) {
+        if (!ShowGift) {//如果此时关闭了动效
+            TinySyncExecutor.getInstance().finish();//停止队列
+            return;
+        }
         if (fileIdentifier.equals("like")) {//播放礼物 玫瑰
             animationView.setImageAssetsFolder("img"); //java代码 设置路径
             animationView.setAnimation("like.json");
@@ -1289,8 +1495,6 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
             animationView.setImageAssetsFolder("img");
             animationView.setAnimation("throne.json");//设置动画文件
         }
-
-
         animationView.playAnimation();
     }
 
@@ -1298,6 +1502,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         animation_eggs_view.setImageAssetsFolder("egg_images");
         animation_eggs_view.setAnimation("gold_eggs.json");//设置动画文件
         animation_eggs_view.playAnimation();
+
     }
 
 
@@ -1313,6 +1518,34 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
             public void onAnimationEnd(Animator animation) {
                 animationView.setVisibility(View.GONE);
                 TinySyncExecutor.getInstance().finish();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animation_gift_all.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override//动画监听
+            public void onAnimationStart(Animator animation) {
+                animation_gift_all.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        animation_gift_all.setVisibility(View.GONE);
+
+                    }
+                }, 4000); // 延时2秒
+
             }
 
             @Override
@@ -1356,6 +1589,18 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
             }
         });
 
+
+        enb_voice_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override //静音开关监听
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {
+                    zegoAudioRoom.enableSpeaker(true);
+                } else {
+                    zegoAudioRoom.enableSpeaker(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -1373,11 +1618,11 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         intentFilter.addAction("com.Record.broadcasereceiver.MYRECEIVER");
         registerReceiver(myReceiver, intentFilter);
         //因为这里需要注入Message，所以不能在AndroidManifest文件中静态注册广播接收器
-        myReceiver.setMessage( this);
+        myReceiver.setMessage(this);
     }
 
 
-    @OnClick({R.id.img_iv, R.id.room_follow_iv, R.id.animation_eggs_view, R.id.onlinenum_ll, R.id.main_rv, R.id.rowwheat_ll, R.id.setting_ll, R.id.chat_ll, R.id.gold_fl, R.id.exit_iv, R.id.share_iv, R.id.mai_ll, R.id.expression_ll, R.id.gift_ll, R.id.rule_ll, R.id.rank_ll})
+    @OnClick({R.id.img_iv, R.id.room_follow_iv, R.id.main_gift_fl, R.id.animation_eggs_view, R.id.onlinenum_ll, R.id.main_rv, R.id.rowwheat_ll, R.id.setting_ll, R.id.chat_ll, R.id.gold_fl, R.id.exit_iv, R.id.share_iv, R.id.mai_ll, R.id.expression_ll, R.id.gift_ll, R.id.rule_ll, R.id.rank_ll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_iv://房主头像
@@ -1407,7 +1652,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
 
                 break;
             case R.id.share_iv://分享
-//                RoomShareWindow();
+                RoomShareWindow();
                 break;
             case R.id.setting_ll://设置
                 Log.e("setting_ll", "当前公屏状态" + roomdata.getShowChat());
@@ -1460,11 +1705,21 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.gift_ll://礼物
+                GiftAlltype = "2";
+                GiftAllisman = "1";
+                GiftAllpostion = 0;
                 FindPersonalGift();//查询背包礼物列表
-                RoomGiftWindowAll("2", "1", giftArray, Roomid, 0, roomdata, pakagegiftArray);
                 break;
             case R.id.animation_eggs_view://砸蛋
                 EggsWindow();
+                break;
+            case R.id.main_gift_fl://切换房间
+                Log.e("切换房间", "getChangeRoomid=" + MyApplication.getInstance().getChangeRoomid());
+                if (!MyApplication.getInstance().getChangeRoomid().equals(Roomid)) {//不是自己所在的房间才切换
+                    ChangeRoom = true;
+                    finish();
+                    returnActivityB = false;
+                }
                 break;
 
 
@@ -1639,8 +1894,6 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-
-
     private void ExitRoomWindow() {//退出窗口
         mExitRoomWindow = new ExitRoomWindow(MainRoomActivity.this,
                 new View.OnClickListener() {
@@ -1652,6 +1905,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                         switch (point) {
                             case 4://最小化
                                 mExitRoomWindow.dismiss();
+                                MyApplication.getInstance().setChangeRoomid("");//切换房间的roomid
 //                                Log.e("云信退出房间", "YXRoomid=" + YXRoomid);
 //                                NIMClient.getService(ChatRoomServiceObserver.class).observeReceiveMessage(incomingChatRoomMsg, false);//注销监听
 //                                NIMClient.getService(ChatRoomService.class).exitChatRoom(YXRoomid);//云信退出房间
@@ -1667,7 +1921,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                                 moveTaskToBack(true);//singleTask模式会返回到桌面  singleInstance模式会返回主页面 但是会出现白屏问题
 //                                onBackPressed();//调用键盘返回键 避免返回到桌面
                                 returnActivityB = false;
-                                Log.e("HasMainActivity","HasMainActivity="+HasMainActivity);
+//                                Log.e("HasMainActivity", "HasMainActivity=" + HasMainActivity);
 //                                if(HasMainActivity){
 //                                    returnActivitySmall=true;
 ////                                    MyApplication.getInstance().setExitRoomid(Roomid);
@@ -1688,19 +1942,16 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                                 break;
                             case 5://退出
                                 mExitRoomWindow.dismiss();
+                                MyApplication.getInstance().setChangeRoomid("");//切换房间的roomid
                                 Log.e("云信退出房间", "YXRoomid" + YXRoomid);
                                 NIMClient.getService(ChatRoomServiceObserver.class).observeReceiveMessage(incomingChatRoomMsg, false);//注销监听
                                 NIMClient.getService(ChatRoomService.class).exitChatRoom(YXRoomid);//云信退出房间
                                 OutRoom();//清除即构相关信息
                                 getQuitRoom();//退出房间
-                                EventBus.getDefault().post(new TabCheckEvent("退出房间"));
+//                                EventBus.getDefault().post(new TabCheckEvent("退出房间"));
                                 MyApplication.getInstance().setMaiRoomid("");
                                 finish();
                                 returnActivityB = false;
-//                                if(HasMainActivity){
-//                                    Intent intent=new Intent(mContext,MainActivity.class);
-//                                    startActivity(intent);
-//                                }
                                 break;
                         }
                     }
@@ -1741,7 +1992,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                             case 4://发布到首页
                                 mRoomShareWindow.dismiss();
                                 break;
-                            case 5://兔语好友
+                            case 5://兔耳好友
                                 mRoomShareWindow.dismiss();
                                 break;
                             case 6://通知房间粉丝
@@ -1749,42 +2000,42 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                                 break;
                             case 7://微信
                                 mRoomShareWindow.dismiss();
-                                Log.e("微信分享", "http://ty.fengyugo.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode());
-                                ShareUtils.shareWeb(MainRoomActivity.this, "http://ty.fengyugo.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode()
+                                Log.e("微信分享", "http://www.tuerapp.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode());
+                                ShareUtils.shareWeb(MainRoomActivity.this, "http://www.tuerapp.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode()
                                         , "邀请你进入超好玩的聊天室"
                                         , "恋爱脱单全新玩法,进入房间" + Roomnumber + ",遇见让你心动的声音!", Roompic, R.mipmap.rabblt_icon, SHARE_MEDIA.WEIXIN);
                                 break;
                             case 8://朋友圈
                                 mRoomShareWindow.dismiss();
-                                ShareUtils.shareWeb(MainRoomActivity.this, "http://ty.fengyugo.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode()
+                                ShareUtils.shareWeb(MainRoomActivity.this, "http://www.tuerapp.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode()
                                         , "邀请你进入超好玩的聊天室"
                                         , "恋爱脱单全新玩法,进入房间" + Roomnumber + ",遇见让你心动的声音!", Roompic, R.mipmap.rabblt_icon, SHARE_MEDIA.WEIXIN_CIRCLE);
                                 break;
                             case 9://QQ
                                 mRoomShareWindow.dismiss();
-                                ShareUtils.shareWeb(MainRoomActivity.this, "http://ty.fengyugo.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode()
+                                ShareUtils.shareWeb(MainRoomActivity.this, "http://www.tuerapp.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode()
                                         , "邀请你进入超好玩的聊天室"
                                         , "恋爱脱单全新玩法,进入房间" + Roomnumber + ",遇见让你心动的声音!", Roompic, R.mipmap.rabblt_icon, SHARE_MEDIA.QQ);
                                 break;
                             case 10://QQ空间
                                 mRoomShareWindow.dismiss();
-                                ShareUtils.shareWeb(MainRoomActivity.this, "http://ty.fengyugo.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode()
+                                ShareUtils.shareWeb(MainRoomActivity.this, "http://www.tuerapp.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode()
                                         , "邀请你进入超好玩的聊天室"
                                         , "恋爱脱单全新玩法,进入房间" + Roomnumber + ",遇见让你心动的声音!", Roompic, R.mipmap.rabblt_icon, SHARE_MEDIA.QZONE);
                                 break;
                             case 11://微博
                                 mRoomShareWindow.dismiss();
-                                ShareUtils.shareWeb(MainRoomActivity.this, "http://ty.fengyugo.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode()
+                                ShareUtils.shareWeb(MainRoomActivity.this, "http://www.tuerapp.com/h5/h5/share.html" + "?number=" + Roomnumber + "&id=" + MyApplication.getInstance().getTuercode()
                                         , "邀请你进入超好玩的聊天室"
                                         , "恋爱脱单全新玩法,进入房间" + Roomnumber + ",遇见让你心动的声音!", "", R.mipmap.rabblt_icon, SHARE_MEDIA.SINA);
                                 Log.e("微博", "SINA");
                                 break;
                             case 12://举报
                                 mRoomShareWindow.dismiss();
-                                Intent intent = new Intent(mContext, WebViewActivity2.class);//  http://ty.fengyugo.com/h5/h5/help.html
+                                Intent intent = new Intent(mContext, WebViewActivity2.class);//  http://www.tuerapp.com/h5/h5/help.html
                                 intent.putExtra("webview_title", "举报");
                                 intent.putExtra("type", "room");
-                                intent.putExtra("webview_url", "http://ty.fengyugo.com/h5/h5/report.html" + "?userId=" + MyApplication.getInstance().getUserId() + "&roomId=" + Roomid);
+                                intent.putExtra("webview_url", "http://www.tuerapp.com/h5/h5/report.html" + "?userId=" + MyApplication.getInstance().getUserId() + "&roomId=" + Roomid);
                                 startActivity(intent);
                                 break;
                             case 13://收藏
@@ -1798,7 +2049,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
 
                         }
                     }
-                });
+                }, ShowGift);
         mRoomShareWindow.setClippingEnabled(false);
         mRoomShareWindow.showAtLocation(mainRv, Gravity.BOTTOM, 0, 0);//或者显示在指定父布局上边的指定位置
     }
@@ -2083,9 +2334,17 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                                 mRoomSetingWindow.dismiss();
                                 RoomValueWindow(roomdata.getShowCharm());
                                 break;
+                            case 14://礼物动效
+                                mRoomSetingWindow.dismiss();
+                                if (RoomShowGift) {
+                                    CancelShowGift();//关闭礼物动效
+                                } else {
+                                    ShowGift();//打开礼物动效
+                                }
+                                break;
                         }
                     }
-                }, showCharm);
+                }, showCharm, RoomShowGift);
         mRoomSetingWindow.setClippingEnabled(false);
         mRoomSetingWindow.showAtLocation(mainRv, Gravity.BOTTOM, 0, 0);//或者显示在指定父布局上边的指定位置
     }
@@ -2628,6 +2887,9 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void ConnectRoom() {//设置心跳连接
+        if (MyApplication.getInstance().getUserId().length() < 1) {
+            return;
+        }
         WeakHashMap map = new WeakHashMap();
         map.put("userId", MyApplication.getInstance().getUserId());
         map.put("token", MyApplication.getInstance().getToken());
@@ -2643,6 +2905,13 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         map.put("roomId", Roomid);
         map.put("page", "0");
         postRequest(RetrofitService.FindLiner, map);
+    }
+    private void FindWordLegal(String content) {//查询文字合法
+        WeakHashMap map = new WeakHashMap();
+        map.put("userId", MyApplication.getInstance().getUserId());
+        map.put("token", MyApplication.getInstance().getToken());
+        map.put("word", content);
+        postRequest(RetrofitService.FindWordLegal, map);
     }
 
     public void FindBlacker() {//查询直播间黑名单
@@ -2675,6 +2944,22 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         map.put("userId", MyApplication.getInstance().getUserId());
         map.put("token", MyApplication.getInstance().getToken());
         postRequest(RetrofitService.FindPersonalGift, map);
+    }
+
+    private void ShowGift() {//打开礼物动效
+        WeakHashMap map = new WeakHashMap();
+        map.put("userId", MyApplication.getInstance().getUserId());
+        map.put("token", MyApplication.getInstance().getToken());
+        map.put("roomId", Roomid);
+        postRequest(RetrofitService.ShowGift, map);
+    }
+
+    private void CancelShowGift() {//关闭礼物动效
+        WeakHashMap map = new WeakHashMap();
+        map.put("userId", MyApplication.getInstance().getUserId());
+        map.put("token", MyApplication.getInstance().getToken());
+        map.put("roomId", Roomid);
+        postRequest(RetrofitService.CancelShowGift, map);
     }
 
     public void AddManager(String managerId) {//设置管理员
@@ -2729,6 +3014,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         postRequest(RetrofitService.FollowUser, map);
     }
 
+
     @Override
     protected void onCalllBack(Call<String> call, Response<String> response, String
             result, String url) {
@@ -2766,6 +3052,12 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                     }.getType());
             if (mMainModel.getCode().equals("1")) {
                 if (mMainModel.getData() != null) {
+                    if (isFirst) {//第一次记录后台返回的值
+                        ShowGift = mMainModel.getData().getShowGift();//是否打开礼物动效
+                        isFirst = false;
+                        Log.e("ShowGift", "FindRoomInfo      ShowGift=" + ShowGift + "   getShowGift=" + mMainModel.getData().getShowGift());
+                    }
+                    RoomShowGift = mMainModel.getData().getShowGift();//房间礼物动效
                     MyRoleType = mMainModel.getData().getRoleType();//获取权限类型
                     roomdata = mMainModel.getData();
                     if (mMainModel.getData().getIsCollect().equals("true")) {
@@ -2853,7 +3145,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                         }
                     }
                     mikeArray.clear();
-                    my_mike_type.setText("我要上麦");
+                    my_mike_type.setText("上麦");
                     if (mMainModel.getData().getMikeArray() != null && mMainModel.getData().getMikeArray().size() == 8) {
                         for (int i = 0; i < mMainModel.getData().getMikeArray().size(); i++) {
                             mikeArray.add(mMainModel.getData().getMikeArray().get(i));//保存用户信息
@@ -2936,6 +3228,8 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
 
                         if (my_mike_type.getText().equals("我在麦上")) {
 //                            mai_ll.setBackgroundResource(R.drawable.upmai_bg);
+                            mic_phone_cb.setVisibility(View.VISIBLE);
+                            mai_ll.setVisibility(View.GONE);
                             my_mike_type.setVisibility(View.GONE);
                             mic_phone_cb.setVisibility(View.VISIBLE);
                             if (IsStartPush) {
@@ -2946,6 +3240,8 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                                 Log.e("我的麦状态", "开始发布直播");
                             }
                         } else {//不再麦上
+                            mai_ll.setVisibility(View.VISIBLE);
+                            mic_phone_cb.setVisibility(View.GONE);
 //                            mai_ll.setBackgroundResource(R.mipmap.btn_microphone_user);
                             my_mike_type.setVisibility(View.VISIBLE);
                             mic_phone_cb.setVisibility(View.GONE);
@@ -3062,11 +3358,17 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                 LookName = mMainModel.getData().getUsername();//查看的用户的昵称
                 if (LookMIkeUser) {//查看麦上非自己用户信息
                     if (isManager) {//管理员
+                        GiftAlltype = "1";
+                        GiftAllisman = "1";
+                        GiftAllpostion = LookPostion;
                         FindPersonalGift();//查询背包礼物列表
-                        RoomGiftWindowAll("1", "1", giftArray, Roomid, LookPostion, roomdata, pakagegiftArray);
+//                        RoomGiftWindowAll("1", "1", giftArray, Roomid, LookPostion, roomdata, pakagegiftArray);
                     } else {//普通
+                        GiftAlltype = "1";
+                        GiftAllisman = "2";
+                        GiftAllpostion = LookPostion;
                         FindPersonalGift();//查询背包礼物列表
-                        RoomGiftWindowAll("1", "2", giftArray, Roomid, LookPostion, roomdata, pakagegiftArray);
+//                        RoomGiftWindowAll("1", "2", giftArray, Roomid, LookPostion, roomdata, pakagegiftArray);
                     }
                     LookMIkeUser = false;
                 }
@@ -3086,6 +3388,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
             if (mMainModel.getCode().equals("1")) {
                 if (mMainModel.getData() != null) {
                     roomdata = mMainModel.getData();
+                    RoomShowGift = mMainModel.getData().getShowGift();//房间礼物动效
                     if (mMainModel.getData().getIsCollect() != null) {
                         if (mMainModel.getData().getIsCollect().equals("true")) {
                             IsCollect = true;
@@ -3170,7 +3473,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                         }
                     }
                     mikeArray.clear();
-                    my_mike_type.setText("我要上麦");
+                    my_mike_type.setText("上麦");
                     if (mMainModel.getData().getMikeArray() != null && mMainModel.getData().getMikeArray().size() == 8) {
                         for (int i = 0; i < mMainModel.getData().getMikeArray().size(); i++) {
                             mikeArray.add(mMainModel.getData().getMikeArray().get(i));//保存用户信息
@@ -3218,6 +3521,8 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
 
                         if (my_mike_type.getText().equals("我在麦上")) {
 //                            mai_ll.setBackgroundResource(R.drawable.upmai_bg);
+                            mic_phone_cb.setVisibility(View.VISIBLE);
+                            mai_ll.setVisibility(View.GONE);
                             my_mike_type.setVisibility(View.GONE);
                             mic_phone_cb.setVisibility(View.VISIBLE);
                             if (IsStartPush) {
@@ -3228,6 +3533,8 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                                 Log.e("我的麦状态", "开始发布直播");
                             }
                         } else {//不再麦上
+                            mai_ll.setVisibility(View.VISIBLE);
+                            mic_phone_cb.setVisibility(View.GONE);
 //                            mai_ll.setBackgroundResource(R.mipmap.btn_microphone_user);
                             my_mike_type.setVisibility(View.VISIBLE);
                             mic_phone_cb.setVisibility(View.GONE);
@@ -3346,7 +3653,36 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
             } else {
                 Toast.makeText(mContext, mStringModel.getErrorMsg(), Toast.LENGTH_SHORT).show();
             }
-        } else if (url.equals(RetrofitService.Head + RetrofitService.CancelCollectRoom)) {//取消收藏直播间
+        }  else if (url.equals(RetrofitService.Head + RetrofitService.FindWordLegal)) {//校验发送文字 是否合法
+            Log.e("FindWordLegal", "result=" + result);
+            MainModel mainModel = new Gson().fromJson(result,
+                    new TypeToken<MainModel>() {
+                    }.getType());
+            if (mainModel.getCode().equals("1")) { //合法可以发送
+                //todo----------------------------------------------------------
+                MainDataBean mainDataBean = new MainDataBean();
+                mainDataBean.setBody(sendnes);
+                mainDataBean.setType("10");
+                UserData data = new UserData();
+                data.setExpRank(MyApplication.getInstance().getUserRank());
+                data.setPortraitPath(MyApplication.getInstance().getUserImg());
+                data.setUserId(MyApplication.getInstance().getUserId());
+                data.setUsername(MyApplication.getInstance().getUserName());
+                mainDataBean.setFromUser(data);
+                //对象转字符串
+                Gson gson = new Gson();
+                String jsondata = gson.toJson(mainDataBean);
+                ChatRoomSendMSG2("10", "", "", "", jsondata);
+            } else if (mainModel.getCode().equals("0")) {
+                Toast.makeText(mContext, R.string.login_token, Toast.LENGTH_SHORT).show();
+                MyApplication.getInstance().setUserId("");
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+            } else {//code=2不合法
+                Toast.makeText(mContext, mainModel.getErrorMsg(), Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if (url.equals(RetrofitService.Head + RetrofitService.CancelCollectRoom)) {//取消收藏直播间
             Log.e("CancelCollectRoom", "result=" + result);
             StringModel mStringModel = new Gson().fromJson(result,
                     new TypeToken<StringModel>() {
@@ -3546,6 +3882,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                         pakagegiftArray.add(model.getData().get(i));
                     }
                 }
+                RoomGiftWindowAll(GiftAlltype, GiftAllisman, giftArray, Roomid, GiftAllpostion, roomdata, pakagegiftArray);
             } else if (model.getCode().equals("0")) {
                 Toast.makeText(mContext, R.string.login_token, Toast.LENGTH_SHORT).show();
                 MyApplication.getInstance().setUserId("");
@@ -3619,7 +3956,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         } else if (url.equals(RetrofitService.Head + RetrofitService.CancelSetLineMike)) {//取消麦位排队
             Log.e("CancelSetLineMike", "result=" + result);
             GetToast(result, "8");
-        } else if (url.equals(RetrofitService.Head + RetrofitService.CancelSetReceptionistMike)) {//取消主持位
+        } else if (url.equals(RetrofitService.Head + CancelSetReceptionistMike)) {//取消主持位
             Log.e("CancelSetRecepMike", "result=" + result);
             GetToast(result, "9");
         } else if (url.equals(RetrofitService.Head + RetrofitService.CancelSetBossMike)) {//取消老板位
@@ -3859,7 +4196,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         zegoAudioRoom.enableAux(false);
         zegoAudioRoom.enableMic(true);
         zegoAudioRoom.enableSelectedAudioRecord(ZegoConstants.AudioRecordMask.NoRecord, 44100);
-        zegoAudioRoom.enableSpeaker(true);
+        zegoAudioRoom.enableSpeaker(true);//设置是否静音 TODO --------------------------------------------------------------
         boolean success = zegoAudioRoom.
                 loginRoom(roomId, new ZegoLoginAudioRoomCallback() {
                     @SuppressLint("DefaultLocale")
@@ -4067,7 +4404,9 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
                 if (stateCode == 0) {
                     recyAdapter.bindUserInfoStreamID(zegoAudioStream);
                 } else {
-                    recyAdapter.streamStateUpdate(1, zegoAudioStream);
+                    if (zegoAudioStream != null) {
+                        recyAdapter.streamStateUpdate(1, zegoAudioStream);
+                    }
                 }
             }
 
@@ -4287,8 +4626,8 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
     public void Stopsoundbg(int mikenumber, String mikerGender) {
         if (mikenumber == 0) {
             if (animationDrawable != null) {
-//                animationDrawable = (AnimationDrawable) soundIv.getDrawable();
-//                animationDrawable.stop();
+                animationDrawable = (AnimationDrawable) soundIv.getDrawable();
+                animationDrawable.stop();
                 soundIv.setVisibility(View.INVISIBLE);
             }
         } else if (mikenumber == 1) {
@@ -4305,8 +4644,8 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
             }
         } else if (mikenumber == 3) {
             if (animationDrawable4 != null) {
-                animationDrawable = (AnimationDrawable) soundIv4.getDrawable();
-                animationDrawable.stop();
+                animationDrawable4 = (AnimationDrawable) soundIv4.getDrawable();
+                animationDrawable4.stop();
                 soundIv4.setVisibility(View.INVISIBLE);
             }
         } else if (mikenumber == 4) {
@@ -4426,7 +4765,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         Log.e("MyReceiver", "收到广播 " + str1 + " " + str2);//用户云心账号 昵称
         if (str1.equals("start")) {
             zegoAudioRoom.pauseAudioModule(); // 暂停音频模块
-        }else if(str1.equals("stop")){
+        } else if (str1.equals("stop")) {
             zegoAudioRoom.resumeAudioModule(); // 恢复音频模块
         }
     }
@@ -4462,7 +4801,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         super.onStop();
         Log.e("MainRoomLive", "onStop");
 //        mHandler.removeCallbacks(scrollRunnable);
-
+        System.gc(); // 提醒系统及时回收
     }
 
     @Override
@@ -4477,7 +4816,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
             mGiftAnimWindow.dismiss();
         }
         Log.e("音频模块", "onPause暂停");
-        if(zegoAudioRoom!=null){
+        if (zegoAudioRoom != null) {
             zegoAudioRoom.pauseAudioModule(); // 暂停音频模块
         }
         Log.e("云信退出房间", "YXRoomid" + YXRoomid);
@@ -4623,7 +4962,7 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         NIMClient.getService(ChatRoomService.class).exitChatRoom(YXRoomid);//云信退出房间
         OutRoom();//清除即构相关信息
         getQuitRoom();//退出房间
-        EventBus.getDefault().post(new TabCheckEvent("退出房间"));
+//        EventBus.getDefault().post(new TabCheckEvent("退出房间"));
         MyApplication.getInstance().setMaiRoomid("");
         finish();
     }
@@ -4680,4 +5019,118 @@ public class MainRoomActivity extends BaseActivity implements View.OnClickListen
         }
         return false;
     }
+
+    private class MyListenr1 implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation arg0) {
+            // TODO Auto-generated method stub
+            mainGiftFl.setVisibility(View.VISIBLE);
+            Log.d("BruceZhang", "Animation End!");
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation arg0) {
+            // TODO Auto-generated method stub
+            Log.d("BruceZhang", "Animation Repeat!");
+        }
+
+        @Override
+        public void onAnimationStart(Animation arg0) {
+            // TODO Auto-generated method stub
+            Log.d("BruceZhang", "Animation Start!");
+        }
+
+    }
+
+    private class MyListenr2 implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation arg0) {
+            // TODO Auto-generated method stub
+            mainGiftFl.setVisibility(View.GONE);
+            isPlayAll = false;
+            syncSchduler.next();
+            Log.d("BruceZhang", "Animation End!");
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation arg0) {
+            // TODO Auto-generated method stub
+            Log.d("BruceZhang", "Animation Repeat!");
+        }
+
+        @Override
+        public void onAnimationStart(Animation arg0) {
+            // TODO Auto-generated method stub
+            Log.d("BruceZhang", "Animation Start!");
+        }
+
+    }
+
+
+    private class MyListenr3 implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation arg0) {
+            // TODO Auto-generated method stub
+            main_gift_zd_fl.setVisibility(View.VISIBLE);
+            Log.d("BruceZhang", "Animation End!");
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation arg0) {
+            // TODO Auto-generated method stub
+            Log.d("BruceZhang", "Animation Repeat!");
+        }
+
+        @Override
+        public void onAnimationStart(Animation arg0) {
+            // TODO Auto-generated method stub
+            Log.d("BruceZhang", "Animation Start!");
+        }
+
+    }
+
+    private class MyListenr4 implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation arg0) {
+            // TODO Auto-generated method stub
+            main_gift_zd_fl.setVisibility(View.GONE);
+            isPlayAll2 = false;
+            syncSchduler2.next();
+
+            Log.d("BruceZhang", "Animation End!");
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation arg0) {
+            // TODO Auto-generated method stub
+            Log.d("BruceZhang", "Animation Repeat!");
+        }
+
+        @Override
+        public void onAnimationStart(Animation arg0) {
+            // TODO Auto-generated method stub
+            Log.d("BruceZhang", "Animation Start!");
+//        registerNimBroadcastMessage(true);
+        }
+
+    }
+
+//    /**
+//     * 注册云信全服广播接收器
+//     *
+//     * @param register
+//     */
+//    private void registerNimBroadcastMessage(boolean register) {
+//        NIMClient.getService(MsgServiceObserve.class).observeBroadcastMessage(new Observer<BroadcastMessage>() {
+//            @Override
+//            public void onEvent(BroadcastMessage broadcastMessage) {
+//                // 处理
+//            }
+//        }, register);
+//    }
+
 }

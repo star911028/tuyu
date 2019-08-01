@@ -68,7 +68,7 @@ public class GiftGridViewAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         if(gifts.size()>page * 8 + position){
             ViewHolder viewHolder = null;
-            Log.e("背包礼物数量","position="+position);
+            Log.e("背包礼物种类数量"," "+gifts.size());
             final MikeArray catogary = gifts.get(page * 8 + position);
             //todo  java.lang.IndexOutOfBoundsException: Index: 2, Size: 2
 
@@ -114,11 +114,12 @@ public class GiftGridViewAdapter extends BaseAdapter {
                 if(catogary.getGiftId().equals(CheckgiftId)){
                     int nums = Integer.parseInt(catogary.getCount())-needdelnums;
                     viewHolder.count_tv.setText("x"+nums);
-                    Log.e("CheckgiftId","nums="+nums);
+                    Log.e("CheckgiftId","nums="+nums+"   gifts.size="+gifts.size());
                     catogary.setCount(nums+"");//重新设置礼物数量
                     CheckgiftId="";
-                    if(nums==0){
+                    if(nums==0){//数量为0时
                         gifts.remove(position);
+                        Log.e("CheckgiftId","remove="+"   gifts.size="+gifts.size());
                     }
                 }
             }
@@ -136,12 +137,18 @@ public class GiftGridViewAdapter extends BaseAdapter {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClickListener.onItemClick(page * 8 + position);
+                    if(gifts.size()>page * 8 + position){
+                        onItemClickListener.onItemClick(page * 8 + position);
+                    }
                 }
             });
-
         }
-        return convertView;
+        if(convertView!=null){
+            return convertView;
+        }else {
+            return null;
+        }
+
     }
 
 

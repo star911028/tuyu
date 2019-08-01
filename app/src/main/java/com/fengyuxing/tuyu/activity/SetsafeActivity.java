@@ -62,35 +62,37 @@ public class SetsafeActivity extends BaseActivity implements View.OnClickListene
             //实名验证显示黄色待审核  不可点击进入
 //3表示完成了实名认证和实名验证  此时实名认证显示绿色已完成 不可点击进入
             //实名验证显示绿色已完成  不可点击进入
-            if (userinfo.getIdentityStatus().equals("0")) {
-                mainTypeTv.setText("低");
-                smtypeTv.setText("未完成");
-                yztypeTv.setText("未完成");
-                smrzLl.setEnabled(true);
-                smyzLl.setEnabled(true);
-            } else if (userinfo.getIdentityStatus().equals("1")) {
-                mainTypeTv.setText("中");
-                smtypeTv.setText("已完成");
-                yztypeTv.setText("未完成");
-                smrzLl.setEnabled(false);
-                smyzLl.setEnabled(true);
-            } else if (userinfo.getIdentityStatus().equals("2")) {
-                mainTypeTv.setText("高");
-                smtypeTv.setText("已完成");
-                yztypeTv.setText("待审核");
-                smrzLl.setEnabled(false);
-                smyzLl.setEnabled(false);
-            }else {
-                mainTypeTv.setText("高");
-                smtypeTv.setText("已完成");
-                yztypeTv.setText("已完成");
-                smrzLl.setEnabled(false);
-                smyzLl.setEnabled(false);
-            }
-            if (userinfo.getIsProtect().equals("fale")) {
-                jztypeTv.setText("未开启");
-            } else {
-                jztypeTv.setText("已开启");
+            if(userinfo.getIdentityStatus()!=null){
+                if (userinfo.getIdentityStatus().equals("0")) {
+                    mainTypeTv.setText("低");
+                    smtypeTv.setText("未完成");
+                    yztypeTv.setText("未完成");
+                    smrzLl.setEnabled(true);
+                    smyzLl.setEnabled(true);
+                } else if (userinfo.getIdentityStatus().equals("1")) {
+                    mainTypeTv.setText("中");
+                    smtypeTv.setText("已完成");
+                    yztypeTv.setText("未完成");
+                    smrzLl.setEnabled(false);
+                    smyzLl.setEnabled(true);
+                } else if (userinfo.getIdentityStatus().equals("2")) {
+                    mainTypeTv.setText("高");
+                    smtypeTv.setText("已完成");
+                    yztypeTv.setText("待审核");
+                    smrzLl.setEnabled(false);
+                    smyzLl.setEnabled(false);
+                }else {
+                    mainTypeTv.setText("高");
+                    smtypeTv.setText("已完成");
+                    yztypeTv.setText("已完成");
+                    smrzLl.setEnabled(false);
+                    smyzLl.setEnabled(false);
+                }
+                if (userinfo.getIsProtect().equals("fale")) {
+                    jztypeTv.setText("未开启");
+                } else {
+                    jztypeTv.setText("已开启");
+                }
             }
         }
     }

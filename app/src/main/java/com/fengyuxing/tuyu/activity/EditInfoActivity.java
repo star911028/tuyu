@@ -39,6 +39,7 @@ import com.fengyuxing.tuyu.view.GetJsonDataUtil;
 import com.fengyuxing.tuyu.view.LodingWindow;
 import com.fengyuxing.tuyu.view.SetPhotoWindow;
 import com.fengyuxing.tuyu.view.ShengBean;
+import com.nanchen.compresshelper.CompressHelper;
 
 import org.json.JSONException;
 
@@ -46,6 +47,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -801,6 +803,16 @@ public class EditInfoActivity extends ImageBaseActivity implements View.OnClickL
             OkHttpClient okHttpClient = new OkHttpClient();
 //            Log.e("uploadImage", imagePath + " \n" + URL);
             File file = new File(imagePath);
+
+
+            // 默认的压缩方法，多张图片只需要直接加入循环即可
+//            File  newFile = CompressHelper.getDefault(getApplicationContext()).compressToFile(file);
+//            String  newFilesize=    String.format("Size : %s", getReadableFileSize(newFile.length()));
+//            String  oldFilesize=    String.format("Size : %s", getReadableFileSize(file.length()));
+//
+//            Log.e("compress","newFilesize="+newFilesize+"  oldFilesize="+oldFilesize);
+
+
             RequestBody image = RequestBody.create(MediaType.parse("image/png"), file);
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
@@ -813,9 +825,14 @@ public class EditInfoActivity extends ImageBaseActivity implements View.OnClickL
             Call call = okHttpClient.newCall(request);
             call.enqueue(new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.d("imagePath", "onFailure: " + e);
-                    saveTv.setEnabled(true);
+                public void onFailure(Call call, final IOException e) {
+                    runOnUiThread(new Runnable() {//线程切换
+                        @Override
+                        public void run() {
+                            Log.d("imagePath", "onFailure: " + e);
+                            saveTv.setEnabled(true);
+                        }
+                    });
                 }
 
                 @Override
@@ -862,7 +879,14 @@ public class EditInfoActivity extends ImageBaseActivity implements View.OnClickL
         return null;
 
     }
-
+    public String getReadableFileSize(long size) {
+        if (size <= 0) {
+            return "0";
+        }
+        final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+    }
     private void AddPhonto() {//添加照片
         mAddPhotoWindow = new AddPhotoWindow(EditInfoActivity.this,
                 new View.OnClickListener() {
